@@ -1,5 +1,5 @@
 import {
-  ArrowDownToLine, Check, CircleHelp, Download, FileText, Folder, FolderOpen, Menu,
+  ArrowDownToLine, Check, CircleHelp, Download, FileText, Folder, FolderOpen, House, LayoutDashboard, Menu,
   Pencil, Settings2, ShieldCheck, Sparkles, Trash2, X,
 } from "lucide-react";
 import DOMPurify from "dompurify";
@@ -64,6 +64,12 @@ function findFolder(node: FolderNode, path: string): FolderNode | null {
   return null;
 }
 
+function isInstalledMobilePwa(): boolean {
+  const standalone = window.matchMedia("(display-mode: standalone)").matches
+    || Boolean((navigator as Navigator & { standalone?: boolean }).standalone);
+  return standalone && window.matchMedia("(pointer: coarse)").matches;
+}
+
 function App() {
   const adapter = useMemo(() => new BrowserFileSystemAdapter(), []);
   const [tree, setTree] = useState<FolderNode | null>(null);
@@ -89,6 +95,7 @@ function App() {
   const [saveState, setSaveState] = useState<"saved" | "saving" | "error">("saved");
   const [loading, setLoading] = useState(false);
   const [rootAccessNeeded, setRootAccessNeeded] = useState(false);
+  const [dashboardOpen, setDashboardOpen] = useState(() => window.location.pathname.replace(/\/+$/, "") === "/workspace");
   const [startupError, setStartupError] = useState("");
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [installPrompt, setInstallPrompt] = useState<Event & { prompt: () => Promise<void>; userChoice: Promise<{ outcome: string }> } | null>(null);
@@ -103,6 +110,15 @@ function App() {
     window.clearTimeout(toastTimer.current);
     toastTimer.current = window.setTimeout(() => setToast(null), 2800);
   }, []);
+
+  function navigateToPage(openDashboard: boolean, replace = false): void {
+    const path = openDashboard ? "/workspace" : "/";
+    if (window.location.pathname !== path) {
+      if (replace) window.history.replaceState({}, "", path);
+      else window.history.pushState({}, "", path);
+    }
+    setDashboardOpen(openDashboard);
+  }
 
   const reload = useCallback(async (keepPath?: string) => {
     if (!adapter.hasRoot) return;
@@ -131,6 +147,14 @@ function App() {
   }, [adapter, activeFolder, selectedPath, showToast]);
 
   useEffect(() => {
+    const handlePopState = () => {
+      setDashboardOpen(window.location.pathname.replace(/\/+$/, "") === "/workspace");
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  useEffect(() => {
     let cancelled = false;
     void adapter.restoreRoot().then(async (permissionGranted) => {
       if (cancelled) return;
@@ -143,6 +167,9 @@ function App() {
         if (cancelled) return;
         setTree(nextTree);
         setNotes(flattenNotes(nextTree));
+        if (isInstalledMobilePwa() && window.location.pathname !== "/workspace") {
+          navigateToPage(true, true);
+        }
       }
     }).catch((error: unknown) => {
       if (!cancelled) setStartupError(error instanceof Error ? error.message : "Could not restore the saved folder.");
@@ -244,6 +271,7 @@ function App() {
       setActiveFolder("");
       setSelectedPath("");
       await reload("");
+      if (isInstalledMobilePwa()) navigateToPage(true);
       showToast("Your local folder is ready.");
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") return;
@@ -260,6 +288,7 @@ function App() {
       }
       await reload("");
       setStartupError("");
+      if (isInstalledMobilePwa()) navigateToPage(true);
     } catch (error) {
       showToast(error instanceof Error ? error.message : "Could not reconnect to the folder.", true);
     }
@@ -436,7 +465,7 @@ function App() {
     setInstallPrompt(null);
   }
 
-  const welcome = !tree;
+  const welcome = !tree || !dashboardOpen;
 
   return (
     <div className="app-shell">
@@ -458,6 +487,16 @@ function App() {
           {tree && <><span className="privacy-pill"><span className="live-dot" /> ALL FILES STAY ON THIS DEVICE</span><span className="sync-pill"><ShieldCheck size={13} /> Offline ready</span></>}
         </div>
         <div className="topbar-actions">
+          <button
+            className="dashboard-nav-button"
+            onClick={() => {
+              if (dashboardOpen && tree) navigateToPage(false);
+              else if (rootAccessNeeded) void reconnectFolder();
+              else if (tree) navigateToPage(true);
+              else if (isSupported) void chooseFolder();
+            }}
+            disabled={!tree && !rootAccessNeeded && !isSupported}
+          >{dashboardOpen && tree ? <><House size={15} /> Home</> : <><LayoutDashboard size={15} /> Dashboard</>}</button>
           {tree && <button className="header-action" onClick={() => setSettingsOpen((open) => !open)} aria-label="Settings"><Settings2 size={17} /></button>}
           {installPrompt && <button className="install-button" onClick={() => void installApp()}><ArrowDownToLine size={15} /> Install app</button>}
           <button className="avatar-button" aria-label="Local workspace"><span>Y</span></button>
@@ -471,6 +510,8 @@ function App() {
         <WelcomeScreen
           supported={isSupported}
           accessNeeded={rootAccessNeeded}
+          workspaceReady={Boolean(tree) && !rootAccessNeeded}
+          onOpenDashboard={() => navigateToPage(true)}
           onChoose={() => void chooseFolder()}
           onReconnect={() => void reconnectFolder()}
           onDownload={() => {

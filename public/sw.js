@@ -27,6 +27,9 @@ self.addEventListener("fetch", (event) => {
           void caches.open(CACHE).then((cache) => cache.put(request, copy));
         }
         return response;
+      }).catch((error) => {
+        if (request.mode === "navigate") return caches.match("/");
+        throw error;
       });
     }),
   );

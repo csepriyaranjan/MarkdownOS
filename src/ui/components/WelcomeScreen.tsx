@@ -1,14 +1,16 @@
-import { ArrowDownToLine, ArrowRight, Clock3, Eye, FileText, Folder, FolderOpen, HardDrive, Home, LockKeyhole, Pencil, Search, ShieldCheck, Sparkles, Star, Waypoints } from "lucide-react";
+import { ArrowDownToLine, ArrowRight, ArrowUpRight, Clock3, Eye, FileText, Folder, FolderOpen, HardDrive, Home, LockKeyhole, Mail, Pencil, Search, ShieldCheck, Sparkles, Star, Waypoints } from "lucide-react";
 
 interface WelcomeScreenProps {
   supported: boolean;
   accessNeeded: boolean;
+  workspaceReady: boolean;
+  onOpenDashboard: () => void;
   onChoose: () => void;
   onReconnect: () => void;
   onDownload: () => void;
 }
 
-export function WelcomeScreen({ supported, accessNeeded, onChoose, onReconnect, onDownload }: WelcomeScreenProps) {
+export function WelcomeScreen({ supported, accessNeeded, workspaceReady, onOpenDashboard, onChoose, onReconnect, onDownload }: WelcomeScreenProps) {
   return <main className="welcome-stage">
     <div className="welcome-decoration glow-one" /><div className="welcome-decoration glow-two" />
     <div className="welcome-layout">
@@ -21,8 +23,10 @@ export function WelcomeScreen({ supported, accessNeeded, onChoose, onReconnect, 
           <div className="welcome-card-copy"><strong>{accessNeeded ? "Reconnect your Files folder" : "Start with your Files folder"}</strong><span>Choose a local folder to make it your private workspace.</span></div>
           {accessNeeded
             ? <button className="welcome-button" onClick={onReconnect}>Reconnect folder <ArrowRight size={16} /></button>
-            : <button className="welcome-button" onClick={onChoose} disabled={!supported}>Choose a folder <ArrowRight size={16} /></button>}
-          {!supported && <button className="text-button download-fallback" onClick={onDownload}>Download a sample note <ArrowDownToLine size={14} /></button>}
+            : workspaceReady
+              ? <button className="welcome-button" onClick={onOpenDashboard}>Open dashboard <ArrowRight size={16} /></button>
+              : <button className="welcome-button" onClick={onChoose} disabled={!supported}>Choose a folder <ArrowRight size={16} /></button>}
+          {!supported && !workspaceReady && <button className="text-button download-fallback" onClick={onDownload}>Download a sample note <ArrowDownToLine size={14} /></button>}
         </div>
         <div className="welcome-assurance"><span><ShieldCheck size={15} /> 100% on your device</span><i /><span><Sparkles size={14} /> No account required</span><i /><span><Clock3 size={14} /> Works offline</span></div>
       </section>
@@ -51,6 +55,50 @@ export function WelcomeScreen({ supported, accessNeeded, onChoose, onReconnect, 
         <article className="feature-card"><span className="feature-icon"><Waypoints size={19} /></span><h3>Ideas, connected</h3><p>Keep folders, Markdown, tags, and Mermaid diagrams together in one calm workspace.</p></article>
         <article className="feature-card"><span className="feature-icon"><LockKeyhole size={19} /></span><h3>Private, even offline</h3><p>No account, sync server, or internet connection needed to get back to your thoughts.</p></article>
       </div>
+    </section>
+    <section className="welcome-tools" aria-labelledby="tools-heading">
+      <div className="tools-heading">
+        <span className="eyebrow">THOUGHTFUL IN THE EVERYDAY</span>
+        <h2 id="tools-heading">Little details that keep you in flow.</h2>
+      </div>
+      <div className="tools-grid">
+        <article className="tool-item"><span className="tool-icon"><Search size={18} /></span><div><h3>Find the thought</h3><p>Search note text, titles, folders, and tags to pick up an idea right where you left it.</p></div></article>
+        <article className="tool-item"><span className="tool-icon"><Star size={18} /></span><div><h3>Keep good ideas close</h3><p>Favorite notes for quick access, with your recently opened writing close at hand.</p></div></article>
+        <article className="tool-item"><span className="tool-icon"><Eye size={18} /></span><div><h3>Write plainly, read clearly</h3><p>Edit Markdown, switch to a clean reading view, and see Mermaid diagrams rendered inline.</p></div></article>
+      </div>
+    </section>
+    <section className="welcome-how" aria-labelledby="how-heading">
+      <div className="how-intro">
+        <span className="eyebrow">A SIMPLE WAY TO BEGIN</span>
+        <h2 id="how-heading">Your notes. Your folders. Your rhythm.</h2>
+        <p>MarkdownOS works with the files you already have, so getting started feels familiar from the first click.</p>
+      </div>
+      <div className="how-steps">
+        <article className="how-step"><span className="step-number">01</span><span className="step-icon"><FolderOpen size={20} /></span><h3>Choose a folder</h3><p>Pick a folder on your device. MarkdownOS asks for access only to that folder.</p></article>
+        <span className="step-connector" aria-hidden="true" />
+        <article className="how-step"><span className="step-number">02</span><span className="step-icon"><FileText size={20} /></span><h3>Open your notes</h3><p>Your Markdown files appear in a tidy library, ready to search, browse, and edit.</p></article>
+        <span className="step-connector" aria-hidden="true" />
+        <article className="how-step"><span className="step-number">03</span><span className="step-icon"><ShieldCheck size={20} /></span><h3>Keep everything local</h3><p>Changes save back to your folder. Your notes stay on your device, even offline.</p></article>
+      </div>
+    </section>
+    <section className="welcome-closer" aria-labelledby="closer-heading">
+      <div className="closer-mark"><FolderOpen size={22} /></div>
+      <div className="closer-copy"><span className="eyebrow">A LITTLE MORE ROOM TO THINK</span><h2 id="closer-heading">Make space for your next idea.</h2><p>Bring your notes together in a workspace that belongs to you.</p></div>
+      {accessNeeded
+        ? <button className="welcome-button" onClick={onReconnect}>Reconnect folder <ArrowRight size={16} /></button>
+        : workspaceReady
+          ? <button className="welcome-button" onClick={onOpenDashboard}>Open dashboard <ArrowRight size={16} /></button>
+          : <button className="welcome-button" onClick={onChoose} disabled={!supported}>Choose a folder <ArrowRight size={16} /></button>}
+    </section>
+    <section className="developer-section" aria-labelledby="developer-heading">
+      <div className="developer-avatar" aria-hidden="true">PR</div>
+      <div className="developer-copy">
+        <span className="eyebrow">BUILT BY A DEVELOPER, FOR DEVELOPERS</span>
+        <h2 id="developer-heading">Thoughtful tools, made to stay yours.</h2>
+        <p>I build practical, privacy-minded software that keeps people in control of their work. MarkdownOS brings that idea to your notes: simple files, a focused workspace, and no account or cloud required.</p>
+        <a className="developer-site" href="https://csepriyaranjan.ventranexa.in" target="_blank" rel="noreferrer">csepriyaranjan.ventranexa.in <ArrowUpRight size={14} /></a>
+      </div>
+      <a className="developer-email" href="mailto:cse.priyaranjan@gmail.com"><Mail size={16} /> Email the developer</a>
     </section>
     <footer className="welcome-footer"><span>MarkdownOS</span><span>Local-first, by nature.</span><span>MADE FOR YOUR MIND <Sparkles size={11} /></span></footer>
   </main>;
