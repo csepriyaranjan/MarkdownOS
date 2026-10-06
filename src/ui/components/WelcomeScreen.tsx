@@ -1,7 +1,7 @@
 import {
   ArrowDownToLine, ArrowRight, ArrowUpRight, Check, ChevronRight, Clock3, Code2, FileCode2,
   FileText, Folder, FolderOpen, HardDrive, Heart, LockKeyhole, Menu, Network, Search,
-  ShieldCheck, Sparkles, Star, X,
+  ShieldCheck, Sparkles, Star,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
