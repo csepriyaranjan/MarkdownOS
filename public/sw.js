@@ -1,4 +1,4 @@
-const CACHE = "markdownos-shell-v1";
+const CACHE = "markdownos-shell-v2";
 const APP_SHELL = ["/", "/manifest.webmanifest"];
 
 self.addEventListener("install", (event) => {

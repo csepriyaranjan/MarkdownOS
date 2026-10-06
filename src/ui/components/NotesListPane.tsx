@@ -1,7 +1,7 @@
 import { AlignLeft, ChevronDown, ChevronRight, FileText, LoaderCircle, MoreHorizontal, PanelRightClose, Plus, Search, Star } from "lucide-react";
 import type { FormEvent, RefObject } from "react";
 import type { NoteDocument } from "../../domain";
-import type { CreateTarget } from "../types";
+import type { CreateTarget, RenameTarget } from "../types";
 import { InlineNameForm } from "./InlineNameForm";
 
 interface NotesListPaneProps {
@@ -18,6 +18,7 @@ interface NotesListPaneProps {
   activeTag: string;
   createTarget: CreateTarget | null;
   createName: string;
+  renameTarget: RenameTarget | null;
   activeFolder: string;
   loading: boolean;
   onCollapse: () => void;
@@ -26,6 +27,9 @@ interface NotesListPaneProps {
   onCreateNameChange: (value: string) => void;
   onSubmitCreate: (event: FormEvent<HTMLFormElement>) => void;
   onCancelCreate: () => void;
+  onSubmitRename: (event: FormEvent<HTMLFormElement>) => void;
+  onChangeRename: (value: string) => void;
+  onCancelRename: () => void;
   onOpenNote: (note: NoteDocument) => void;
   onContextNote: (path: string, x: number, y: number) => void;
   onRefresh: () => void;
@@ -34,8 +38,9 @@ interface NotesListPaneProps {
 export function NotesListPane(props: NotesListPaneProps) {
   const {
     title, rootName, notes, favorites, selectedPath, mobileActive, listCollapsed, width, search,
-    searchInputRef, activeTag, createTarget, createName, activeFolder, loading, onCollapse, onSearch,
-    onCreateNote, onCreateNameChange, onSubmitCreate, onCancelCreate, onOpenNote, onContextNote, onRefresh,
+    searchInputRef, activeTag, createTarget, createName, renameTarget, activeFolder, loading, onCollapse, onSearch,
+    onCreateNote, onCreateNameChange, onSubmitCreate, onCancelCreate, onSubmitRename, onChangeRename,
+    onCancelRename, onOpenNote, onContextNote, onRefresh,
   } = props;
   const shownNotes = activeTag === "__favorites" ? notes.filter((note) => favorites.includes(note.path)) : notes;
 
@@ -58,14 +63,18 @@ export function NotesListPane(props: NotesListPaneProps) {
         shownNotes.map((note) => (
           <article className={`note-card ${selectedPath === note.path ? "is-selected" : ""}`} key={note.path}
             onContextMenu={(event) => { event.preventDefault(); onContextNote(note.path, event.clientX, event.clientY); }}>
-            <button className="note-card-main" onClick={() => onOpenNote(note)}>
-              <div className="note-icon"><FileText size={16} /></div>
-              <div className="note-card-copy"><div className="note-card-title"><strong>{note.name}</strong>{favorites.includes(note.path) && <Star size={12} fill="currentColor" />}</div><p>{note.snippet || "A new page, ready for your ideas."}</p><div className="note-meta">{note.path.split("/").slice(0, -1).join(" / ") || rootName}<span>·</span>{note.modifiedAt ? new Date(note.modifiedAt).toLocaleDateString(undefined, { month: "short", day: "numeric" }) : "Just now"}</div></div>
-            </button>
-            <button className="note-more" aria-label={`Actions for ${note.name}`} onClick={(event) => {
-              const box = event.currentTarget.getBoundingClientRect();
-              onContextNote(note.path, box.right - 180, box.bottom + 4);
-            }}><MoreHorizontal size={17} /></button>
+            {renameTarget?.path === note.path
+              ? <InlineNameForm className="rename-inline" value={renameTarget.value} placeholder="Note name" onChange={onChangeRename} onSubmit={onSubmitRename} onCancel={onCancelRename} />
+              : <>
+                  <button className="note-card-main" onClick={() => onOpenNote(note)}>
+                    <div className="note-icon"><FileText size={16} /></div>
+                    <div className="note-card-copy"><div className="note-card-title"><strong>{note.name}</strong>{favorites.includes(note.path) && <Star size={12} fill="currentColor" />}</div><p>{note.snippet || "A new page, ready for your ideas."}</p><div className="note-meta">{note.path.split("/").slice(0, -1).join(" / ") || rootName}<span>·</span>{note.modifiedAt ? new Date(note.modifiedAt).toLocaleDateString(undefined, { month: "short", day: "numeric" }) : "Just now"}</div></div>
+                  </button>
+                  <button className="note-more" aria-label={`Actions for ${note.name}`} onClick={(event) => {
+                    const box = event.currentTarget.getBoundingClientRect();
+                    onContextNote(note.path, box.right - 180, box.bottom + 4);
+                  }}><MoreHorizontal size={17} /></button>
+                </>}
           </article>
         ))}
       {!loading && shownNotes.length === 0 && (

@@ -575,6 +575,7 @@ function App() {
             activeTag={activeTag}
             createTarget={createTarget}
             createName={createName}
+            renameTarget={renameTarget}
             activeFolder={activeFolder}
             loading={loading}
             onCollapse={collapseFileList}
@@ -583,6 +584,9 @@ function App() {
             onCreateNameChange={setCreateName}
             onSubmitCreate={submitCreate}
             onCancelCreate={() => setCreateTarget(null)}
+            onSubmitRename={submitRename}
+            onChangeRename={(value) => setRenameTarget((target) => target ? { ...target, value } : null)}
+            onCancelRename={() => setRenameTarget(null)}
             onOpenNote={openNote}
             onContextNote={(path, x, y) => setContextTarget({ path, kind: "file", x, y })}
             onRefresh={() => void reload()}
@@ -628,11 +632,11 @@ function App() {
         <div className="modal-actions"><button className="secondary-button" onClick={() => setDeleteTarget(null)}>Cancel</button><button className="danger-button" onClick={() => void confirmDelete()}>Delete permanently</button></div>
       </div></div>}
       {toast && <div className={`toast ${toast.error ? "toast-error" : ""}`} role="status"><span className="toast-indicator">{toast.error ? <X size={13} /> : <Check size={13} />}</span>{toast.message}</div>}
-      <nav className="mobile-tabbar" aria-label="Main navigation">
+      {!welcome && <nav className="mobile-tabbar" aria-label="Main navigation">
         <button className={mobilePane === "folders" ? "selected" : ""} onClick={() => setMobilePane("folders")}><Folder size={18} /><span>Folders</span></button>
         <button className={mobilePane === "files" ? "selected" : ""} onClick={() => setMobilePane("files")}><FileText size={18} /><span>Notes</span></button>
         <button className={mobilePane === "editor" ? "selected" : ""} onClick={() => setMobilePane("editor")}><Pencil size={18} /><span>Editor</span></button>
-      </nav>
+      </nav>}
     </div>
   );
 }
