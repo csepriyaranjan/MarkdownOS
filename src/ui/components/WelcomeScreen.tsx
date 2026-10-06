@@ -1,4 +1,9 @@
-import { ArrowDownToLine, ArrowRight, ArrowUpRight, Clock3, Eye, FileText, Folder, FolderOpen, HardDrive, Home, LockKeyhole, Mail, Pencil, Search, ShieldCheck, Sparkles, Star, Waypoints } from "lucide-react";
+import {
+  ArrowDownToLine, ArrowRight, ArrowUpRight, Check, ChevronRight, Clock3, Code2, FileCode2,
+  FileText, Folder, FolderOpen, HardDrive, Heart, LockKeyhole, Menu, Network, Search,
+  ShieldCheck, Sparkles, Star, X,
+} from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 interface WelcomeScreenProps {
   supported: boolean;
@@ -10,124 +15,212 @@ interface WelcomeScreenProps {
   onDownload: () => void;
 }
 
+const features = [
+  { title: "Write in Markdown", body: "A focused editor for writing, editing, and organizing the files you already know.", icon: FileCode2 },
+  { title: "Your folders. Your files.", body: "Open a folder and work directly with your Markdown files. Nothing to import or migrate.", icon: FolderOpen },
+  { title: "Find anything instantly", body: "Search across filenames, folders, tags, and note content without breaking your flow.", icon: Search },
+  { title: "Turn ideas into diagrams", body: "Write Mermaid right inside your Markdown and see your diagrams rendered inline.", icon: Network },
+];
+
+const useCases = [
+  { title: "Developers", body: "System design, architecture, README files, and technical notes.", icon: Code2, sample: "architecture.md" },
+  { title: "Students", body: "Study notes, diagrams, assignments, and research.", icon: FileText, sample: "biology-notes.md" },
+  { title: "Writers", body: "Ideas, drafts, journals, and long-form writing.", icon: PencilIcon, sample: "a-good-first-line.md" },
+  { title: "Knowledge workers", body: "Projects, meeting notes, documentation, and personal knowledge.", icon: Folder, sample: "weekly-planning.md" },
+];
+
+function PencilIcon({ size = 18 }: { size?: number }) {
+  return <FileCode2 size={size} />;
+}
+
 export function WelcomeScreen({ supported, accessNeeded, workspaceReady, onOpenDashboard, onChoose, onReconnect, onDownload }: WelcomeScreenProps) {
-  return <main className="welcome-stage">
-    <div className="welcome-decoration glow-one" /><div className="welcome-decoration glow-two" />
+  const pageRef = useRef<HTMLDivElement>(null);
+  const [activeFeature, setActiveFeature] = useState(0);
+  const primaryAction = accessNeeded ? onReconnect : workspaceReady ? onOpenDashboard : onChoose;
+  const primaryLabel = accessNeeded ? "Reconnect your folder" : workspaceReady ? "Open your workspace" : "Start with your folder";
 
-    <section className="welcome-hero">
-      <div className="hero-copy">
-        <div className="welcome-kicker"><span className="kicker-star"><Sparkles size={13} /></span> A quieter way to work with notes</div>
-        <h1>Your ideas deserve<br /><span>more room.</span></h1>
-        <p className="welcome-lede">MarkdownOS brings your Markdown files, folders, and thoughts into one calm, private workspace—built to stay out of your way.</p>
-        <div className="hero-actions">
-          {accessNeeded
-            ? <button className="welcome-button" onClick={onReconnect}>Reconnect folder <ArrowRight size={16} /></button>
-            : workspaceReady
-              ? <button className="welcome-button" onClick={onOpenDashboard}>Open dashboard <ArrowRight size={16} /></button>
-              : <button className="welcome-button" onClick={onChoose} disabled={!supported}>Choose your folder <ArrowRight size={16} /></button>}
-          {!supported && !workspaceReady && <button className="welcome-secondary-button" onClick={onDownload}><ArrowDownToLine size={15} /> Download sample</button>}
-        </div>
-        <div className="hero-proof">
-          <span><ShieldCheck size={14} /> Local-first</span>
-          <span><Clock3 size={14} /> Works offline</span>
-          <span><Sparkles size={14} /> No account</span>
-        </div>
-      </div>
+  useEffect(() => {
+    const page = pageRef.current;
+    if (!page || !("IntersectionObserver" in window)) return;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    page.querySelectorAll(".landing-reveal").forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
 
-      <div className="hero-visual" aria-label="MarkdownOS workspace preview">
-        <div className="visual-orbit orbit-one" />
-        <div className="visual-orbit orbit-two" />
-        <div className="workspace-preview">
-          <div className="preview-topbar">
-            <div className="preview-window-controls"><i /><i /><i /></div>
-            <span>My Knowledge</span>
-            <div className="preview-status"><span /> Local</div>
+  return <main className="welcome-stage landing-stage" ref={pageRef}>
+    <div className="landing-page">
+      <header className="landing-nav">
+        <a className="landing-brand" href="#top" aria-label="MarkdownOS home">
+          <img src="/markdownos-icon.svg" alt="" />
+          <span>MarkdownOS</span>
+        </a>
+        <nav className="landing-nav-links" aria-label="Main navigation">
+          <a href="#features">Features</a><a href="#how-it-works">How it works</a>
+          <a href="#privacy">Privacy</a><a href="#developers">For developers</a>
+        </nav>
+        <div className="landing-nav-actions">
+          <a className="nav-github" href="https://github.com/csepriyaranjan" target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={14} /></a>
+          <a className="nav-download" href="https://github.com/csepriyaranjan" target="_blank" rel="noreferrer"><ArrowDownToLine size={15} /> Download</a>
+        </div>
+        <a className="landing-mobile-menu" href="#features" aria-label="Jump to features"><Menu size={20} /></a>
+      </header>
+
+      <section className="landing-hero" id="top">
+        <div className="hero-copy landing-reveal">
+          <div className="landing-badge"><span /> FREE <i /> OFFLINE <i /> LOCAL-FIRST</div>
+          <h1>Your Markdown.<br />Your files.<br /><span>Your workspace.</span></h1>
+          <p className="landing-lede">A powerful desktop-style Markdown workspace that works directly with your local files — no account, no cloud, and no subscription.</p>
+          <div className="hero-actions">
+            <button className="landing-primary-button" onClick={primaryAction} disabled={!supported && !workspaceReady && !accessNeeded}>{primaryLabel} <ArrowRight size={16} /></button>
+            <a className="landing-secondary-button" href="https://github.com/csepriyaranjan" target="_blank" rel="noreferrer">View on GitHub <ArrowUpRight size={15} /></a>
           </div>
-          <div className="preview-workspace">
-            <aside className="preview-sidebar">
-              <div className="preview-brand"><span><Sparkles size={13} /></span>MarkdownOS</div>
-              <div className="preview-nav-item active"><Home size={13} /> All notes <b>24</b></div>
-              <div className="preview-nav-item"><FileText size={13} /> Recent</div>
-              <div className="preview-section-label">FOLDERS</div>
-              <div className="preview-folder-item active"><Folder size={13} /> Product Notes <em>8</em></div>
-              <div className="preview-folder-item"><Folder size={13} /> System Design <em>12</em></div>
-              <div className="preview-folder-item"><Folder size={13} /> Journal <em>4</em></div>
-              <div className="preview-sidebar-footer"><span><Star size={12} /> Favorites</span><span><Clock3 size={12} /> Recents</span></div>
-            </aside>
-            <div className="preview-list">
-              <div className="preview-list-heading"><span>PRODUCT NOTES</span><button aria-label="Add note">+</button></div>
-              <strong>Good ideas, kept close.</strong>
-              <label><Search size={12} /> Search your notes</label>
-              <div className="preview-note selected"><span className="preview-note-icon"><FileText size={13} /></span><div><b>Building with intention</b><small>Small details make a meaningful difference…</small><em>Today · 4 min</em></div><Star size={11} /></div>
-              <div className="preview-note"><span className="preview-note-icon"><FileText size={13} /></span><div><b>The shape of a good day</b><small>Make space for the work that matters.</small><em>Yesterday · 2 min</em></div></div>
+          {!supported && <button className="sample-download" onClick={onDownload}><ArrowDownToLine size={13} /> Download a sample Markdown file</button>}
+          <div className="hero-proof"><span><Check /> Free forever</span><span><Check /> Works offline</span><span><Check /> No account required</span></div>
+        </div>
+
+        <div className="hero-visual landing-reveal" aria-label="Preview of the MarkdownOS workspace">
+          <div className="mockup-glow" />
+          <div className="workspace-preview">
+            <div className="preview-topbar"><div className="preview-window-controls"><i /><i /><i /></div><span>My Knowledge</span><div className="preview-status"><span /> Local</div></div>
+            <div className="preview-workspace">
+              <aside className="preview-sidebar">
+                <div className="preview-brand"><span><FileText size={13} /></span>MarkdownOS</div>
+                <div className="preview-section-label">WORKSPACE</div>
+                <div className="preview-nav-item active"><FileText size={13} /> All Notes <b>24</b></div>
+                <div className="preview-nav-item"><Clock3 size={13} /> Recent</div>
+                <div className="preview-nav-item"><Star size={13} /> Favorites</div>
+                <div className="preview-section-label">FOLDERS</div>
+                <div className="preview-folder-item active"><Folder size={13} /> Product Notes <em>8</em></div>
+                <div className="preview-folder-item"><Folder size={13} /> System Design <em>12</em></div>
+                <div className="preview-folder-item"><Folder size={13} /> Journal <em>4</em></div>
+              </aside>
+              <div className="preview-list">
+                <div className="preview-list-heading"><span>MY KNOWLEDGE</span><button aria-label="Add note">+</button></div>
+                <strong>Good ideas, kept close.</strong>
+                <label><Search size={12} /> Search your notes <span>⌘ K</span></label>
+                <div className="preview-note selected"><span className="preview-note-icon"><FileText size={13} /></span><div><b>Building with intention</b><small>The best tools don't ask for your attention…</small><em>Just now · 4 min</em></div><Star size={11} /></div>
+                <div className="preview-note"><span className="preview-note-icon"><FileText size={13} /></span><div><b>The shape of a good day</b><small>Make space for work that matters.</small><em>Yesterday · 2 min</em></div></div>
+                <div className="preview-note"><span className="preview-note-icon"><FileText size={13} /></span><div><b>System architecture</b><small>Client → API → Database</small><em>Monday · 6 min</em></div></div>
+                <div className="preview-note"><span className="preview-note-icon"><FileText size={13} /></span><div><b>Project roadmap</b><small>Where we're going next.</small><em>Friday · 3 min</em></div></div>
+              </div>
+              <div className="preview-editor">
+                <div className="preview-editor-header"><span>PRODUCT NOTES / BUILDING WITH INTENTION</span><div><span>Edit</span><span className="editor-active">Preview</span></div></div>
+                <div className="preview-document"><small>MONDAY, MAY 20</small><h2># Building with<br />intention</h2><p>The best tools don't ask for your attention. They make room for the things that deserve it.</p><h3>## A little more focus</h3><p>Keep what matters nearby. Let everything else be quiet.</p><h3>### A workspace that fits</h3><div className="mini-markdown"><span>-</span> Your files stay yours<br /><span>-</span> Ready when you're offline</div><div className="mini-diagram"><span>flowchart TD</span><b>Ideas <i>↓</i> Notes <i>↓</i> Clarity</b></div></div>
+                <div className="preview-editor-footer"><span><ShieldCheck size={11} /> Saved locally</span><span>Markdown</span></div>
+              </div>
             </div>
-            <div className="preview-editor">
-              <div className="preview-editor-header"><span>PRODUCT NOTES / BUILDING WITH INTENTION</span><div><Pencil size={11} /> Edit <Eye size={11} /> Preview</div></div>
-              <div className="preview-document"><small>MONDAY, MAY 20</small><h2>Building with intention.</h2><span className="preview-rule" /><p>The best tools don’t ask for your attention. They make room for the things that deserve it.</p><h3>A little more focus</h3><p>Keep what matters nearby. Let everything else be quiet.</p></div>
-              <div className="preview-editor-footer"><span><ShieldCheck size={11} /> Saved locally</span><span>Markdown</span></div>
+          </div>
+          <div className="visual-float float-privacy"><span><Check size={14} /></span><div><b>Saved locally</b><small>Changes go straight to disk.</small></div></div>
+          <div className="visual-float float-offline"><span><FolderOpen size={14} /></span><div><b>24 Notes</b><small><span className="float-dot" /> Available offline</small></div></div>
+        </div>
+      </section>
+
+      <section className="value-strip landing-reveal" aria-label="MarkdownOS product facts">
+        <div><span className="value-icon"><Sparkles size={18} /></span><p><b>100% Free</b><small>No subscription.</small></p></div>
+        <div><span className="value-icon"><HardDrive size={18} /></span><p><b>Local-first</b><small>Your files stay on your device.</small></p></div>
+        <div><span className="value-icon"><Network size={18} /></span><p><b>Offline</b><small>No internet required.</small></p></div>
+        <div><span className="value-icon"><FileText size={18} /></span><p><b>Open files</b><small>Normal Markdown files.</small></p></div>
+      </section>
+
+      <section className="landing-section feature-showcase" id="features">
+        <div className="section-heading landing-reveal"><span className="section-eyebrow">A better way to work</span><h2>Everything you need to<br />work with Markdown.</h2><p>Simple enough to disappear. Powerful enough for serious work.</p></div>
+        <div className="feature-showcase-grid">
+          {features.map(({ title, body, icon: Icon }, index) => <button key={title} className={`showcase-card landing-reveal ${activeFeature === index ? "active" : ""}`} onClick={() => setActiveFeature(index)} aria-pressed={activeFeature === index}>
+            <div className="showcase-card-copy"><span className="showcase-icon"><Icon size={19} /></span><span className="showcase-index">0{index + 1}</span><h3>{title}</h3><p>{body}</p></div>
+            <div className={`showcase-demo demo-${index}`}>
+              {index === 0 && <div className="demo-editor"><div><span /><span /><span /> <small>note.md</small></div><pre><i>#</i> Building with intention{"\n\n"}The best tools don't ask{"\n"}for your attention.{"\n\n"}<i>##</i> Keep what matters close</pre></div>}
+              {index === 1 && <div className="demo-files"><b><Folder size={14} /> My Knowledge</b><span>├─ <Folder size={12} /> Notes</span><span>├─ <Folder size={12} /> Projects</span><span>├─ <Folder size={12} /> System Design</span><span>└─ <Folder size={12} /> Journal</span></div>}
+              {index === 2 && <div className="demo-search"><label><Search size={13} /> system design <kbd>ESC</kbd></label><span><FileText size={13} /><b>System architecture</b><small>System Design / architecture.md</small><ChevronRight size={13} /></span><span><FileText size={13} /><b>Design principles</b><small>Product Notes / principles.md</small><ChevronRight size={13} /></span></div>}
+              {index === 3 && <div className="demo-mermaid"><code>flowchart TD<br />&nbsp; A[Client] --&gt; B[API]<br />&nbsp; B --&gt; C[(Database)]</code><div><span>Client</span><i>↓</i><span>API</span><i>↓</i><span>Database</span></div></div>}
+            </div>
+          </button>)}
+        </div>
+      </section>
+
+      <section className="file-workspace-section">
+        <div className="file-workspace-inner">
+          <div className="file-workspace-copy landing-reveal"><span className="section-eyebrow">Your workflow, uninterrupted</span><h2>A workspace built around your files.</h2><p>You shouldn't need to migrate your knowledge into another ecosystem just to get a better interface.</p>
+            <div className="workflow-timeline">
+              <div><span>01</span><p><b>Open your folder</b><small>Choose a folder on your computer.</small></p></div>
+              <div><span>02</span><p><b>Browse your Markdown</b><small>Everything you have is right there.</small></p></div>
+              <div><span>03</span><p><b>Edit and preview</b><small>Write naturally, see it take shape.</small></p></div>
+              <div><span>04</span><p><b>Save directly to disk</b><small>No export step. No second copy.</small></p></div>
+            </div>
+          </div>
+          <div className="dark-product-shot landing-reveal">
+            <div className="dark-shot-bar"><div className="preview-window-controls"><i /><i /><i /></div><span>MarkdownOS <small>— System Design</small></span><span className="shot-saved"><Check size={12} /> Saved</span></div>
+            <div className="dark-shot-content"><aside><div><Folder size={13} /> System Design</div><span>⌁ architecture.md</span><span>⌁ api-design.md</span><span>⌁ database.md</span><span>⌁ decisions.md</span><div><Folder size={13} /> Product Notes</div><div><Folder size={13} /> Journal</div></aside>
+              <article><div className="dark-shot-breadcrumb">SYSTEM DESIGN / ARCHITECTURE.MD</div><h3>System architecture</h3><p>A clear picture of how the pieces fit together.</p><div className="dark-code"><span># The request lifecycle</span><br /><br />```mermaid<br />flowchart LR<br />&nbsp; Client --&gt; API<br />&nbsp; API --&gt; Database<br />```</div><div className="dark-flow"><span>Client</span><i>→</i><span>API</span><i>→</i><span>Database</span></div></article>
             </div>
           </div>
         </div>
-        <div className="visual-float float-privacy"><span><ShieldCheck size={14} /></span><div><b>Private by design</b><small>Nothing leaves your device.</small></div></div>
-        <div className="visual-float float-offline"><span><Sparkles size={14} /></span><div><b>Ready offline</b><small>Use it anywhere.</small></div></div>
-      </div>
-    </section>
+      </section>
 
-    <section className="welcome-features" aria-labelledby="features-heading">
-      <div className="features-intro">
-        <span className="eyebrow">Designed around focus</span>
-        <h2 id="features-heading">Less interface.<br />More thinking.</h2>
-        <p>MarkdownOS keeps the essentials close and the noise out of the way, so your work can feel exactly as it should.</p>
-      </div>
-      <div className="feature-grid">
-        <article className="feature-card"><span className="feature-index">01</span><span className="feature-icon"><HardDrive size={20} /></span><h3>Your files stay yours</h3><p>Work directly in the folders you already use. Every change is saved locally, never uploaded.</p></article>
-        <article className="feature-card"><span className="feature-index">02</span><span className="feature-icon"><Waypoints size={20} /></span><h3>Connected by nature</h3><p>Folders, tags, favorites, and Markdown stay together in one clear, uninterrupted workspace.</p></article>
-        <article className="feature-card"><span className="feature-index">03</span><span className="feature-icon"><LockKeyhole size={20} /></span><h3>Private, always</h3><p>No account, cloud service, or sync server. Your notes remain on your device, even offline.</p></article>
-      </div>
-    </section>
-
-    <section className="welcome-tools" aria-labelledby="tools-heading">
-      <div className="tools-heading"><span className="eyebrow">Thoughtful in the everyday</span><h2 id="tools-heading">Small details, made useful.</h2></div>
-      <div className="tools-grid">
-        <article className="tool-item"><span className="tool-icon"><Search size={18} /></span><div><h3>Find the thought</h3><p>Search titles, note content, folders, and tags without breaking your flow.</p></div></article>
-        <article className="tool-item"><span className="tool-icon"><Star size={18} /></span><div><h3>Keep good ideas close</h3><p>Save favorites and return to recently opened notes in a single click.</p></div></article>
-        <article className="tool-item"><span className="tool-icon"><Eye size={18} /></span><div><h3>Write and read clearly</h3><p>Edit Markdown, switch to a clean reading view, and render Mermaid diagrams inline.</p></div></article>
-      </div>
-    </section>
-
-    <section className="welcome-how" aria-labelledby="how-heading">
-      <div className="how-intro"><span className="eyebrow">From idea to workspace</span><h2 id="how-heading">Three steps. No setup maze.</h2><p>Start with the folder you already use. Everything else is designed around it.</p></div>
-      <div className="how-steps">
-        <article className="how-step"><span className="step-number">01</span><span className="step-icon"><FolderOpen size={20} /></span><h3>Choose your folder</h3><p>Pick a local folder and MarkdownOS will do the rest.</p></article>
-        <span className="step-connector" aria-hidden="true" />
-        <article className="how-step"><span className="step-number">02</span><span className="step-icon"><FileText size={20} /></span><h3>Open your notes</h3><p>Browse, search, edit, and organize your Markdown files.</p></article>
-        <span className="step-connector" aria-hidden="true" />
-        <article className="how-step"><span className="step-number">03</span><span className="step-icon"><ShieldCheck size={20} /></span><h3>Stay in control</h3><p>Your work stays on your device and saves back to your folder.</p></article>
-      </div>
-    </section>
-
-    <section className="welcome-closer" aria-labelledby="closer-heading">
-      <div className="closer-copy"><span className="eyebrow">Your next idea is waiting</span><h2 id="closer-heading">Start with a folder.<br />Keep the space for your thoughts.</h2></div>
-      <div className="closer-action">
-        {accessNeeded ? <button className="welcome-button" onClick={onReconnect}>Reconnect folder <ArrowRight size={16} /></button> : workspaceReady ? <button className="welcome-button" onClick={onOpenDashboard}>Open dashboard <ArrowRight size={16} /></button> : <button className="welcome-button" onClick={onChoose} disabled={!supported}>Choose your folder <ArrowRight size={16} /></button>}
-        {!supported && !workspaceReady && <button className="welcome-secondary-button" onClick={onDownload}><ArrowDownToLine size={15} /> Sample note</button>}
-      </div>
-    </section>
-
-    <section className="developer-section" aria-labelledby="developer-heading">
-      <div className="developer-portrait" aria-hidden="true"><span>PR</span><i /></div>
-      <div className="developer-copy">
-        <span className="eyebrow">Built by a developer, for developers</span>
-        <h2 id="developer-heading">I care about software that feels human.</h2>
-        <p>Hi, I’m Priyaranjan—a developer creating practical tools for people who value their work and their privacy. MarkdownOS is my attempt to make local-first note-taking feel beautifully simple.</p>
-        <div className="developer-links">
-          <a href="https://csepriyaranjan.ventranexa.in" target="_blank" rel="noreferrer">csepriyaranjan.ventranexa.in <ArrowUpRight size={14} /></a>
-          <a href="mailto:cse.priyaranjan@gmail.com"><Mail size={14} /> Email me</a>
+      <section className="ownership-section landing-section landing-reveal">
+        <div className="section-heading"><span className="section-eyebrow">A different kind of workspace</span><h2>SaaS experience.<br />Local ownership.</h2><p>Everything familiar about a great workspace, without giving up control of your notes.</p></div>
+        <div className="comparison-grid">
+          <article className="comparison-card"><span className="comparison-label">THE CLOUD MODEL</span><h3>Traditional cloud notes</h3><ul><li><span><Network /></span> Cloud account</li><li><span><Network /></span> Cloud database</li><li><span><Network /></span> Internet dependency</li><li><span><Network /></span> Subscription</li><li><span><Network /></span> Data stored remotely</li></ul></article>
+          <article className="comparison-card comparison-local"><span className="comparison-label"><span /> THE MARKDOWNOS WAY</span><h3>MarkdownOS</h3><ul><li><span><Check /></span> Local folder</li><li><span><Check /></span> Local Markdown files</li><li><span><Check /></span> Works offline</li><li><span><Check /></span> Free</li><li><span><Check /></span> You own the files</li></ul></article>
         </div>
-      </div>
-      <div className="developer-note"><span>01</span><p>Built from first principles.<br />Designed for daily use.</p></div>
-    </section>
+      </section>
 
-    <footer className="welcome-footer"><span>MarkdownOS</span><span>Local-first, by nature.</span><span>Made for the mind <Sparkles size={11} /></span></footer>
+      <section className="file-ownership-visual landing-reveal">
+        <div className="ownership-heading"><span className="section-eyebrow">No lock-in. No mystery.</span><h2>Your folder is the source of truth.</h2><p>MarkdownOS is the workspace. Your folder remains yours.</p></div>
+        <div className="computer-diagram"><div className="computer-label"><HardDrive size={14} /> YOUR COMPUTER</div><div className="computer-folder"><div className="folder-title"><FolderOpen size={17} /> My Knowledge</div><span><Folder size={13} /> Product Notes/</span><span><Folder size={13} /> System Design/</span><span><Folder size={13} /> Journal/</span><b>*.md</b></div><div className="diagram-connector"><span /></div><div className="os-node"><img src="/markdownos-icon.svg" alt="" /> MarkdownOS</div></div>
+        <p className="ownership-caption"><b>MarkdownOS is the workspace.</b><br />Your folder remains the source of truth.</p>
+      </section>
+
+      <section className="developer-section landing-section" id="developers">
+        <div className="developer-copy landing-reveal"><span className="section-eyebrow">Built for developers</span><h2>Made for people who already live in Markdown.</h2><p>Your READMEs, architecture docs, project notes, and ideas — right where they belong. No proprietary database in between.</p>
+          <div className="developer-points"><span><Check /> Markdown-native</span><span><Check /> Git-friendly</span><span><Check /> Mermaid support</span><span><Check /> Local folders</span><span><Check /> No proprietary storage</span><span><Check /> Works offline</span></div>
+        </div>
+        <div className="developer-visual landing-reveal"><div className="dev-files"><div><FolderOpen size={14} /> markdown-os</div>{["README.md", "architecture.md", "api-design.md", "database.md", "roadmap.md", "meeting-notes.md", "ideas.md"].map((file, index) => <span key={file} className={index === 1 ? "selected" : ""}><FileText size={13} /> {file}</span>)}</div><div className="dev-terminal"><div><i /><i /><i /><small>~/markdown-os</small></div><pre><span>$</span> ls ~/My-Knowledge{"\n"}<b>README.md</b>  architecture.md{"\n"}api-design.md  database.md{"\n"}roadmap.md  meeting-notes.md{"\n"}ideas.md{"\n\n"}<span>$</span> <em>_</em></pre><footer><LockKeyhole size={12} /> Plain files. Your machine. Your call.</footer></div></div>
+      </section>
+
+      <section className="steps-section landing-section" id="how-it-works">
+        <div className="section-heading landing-reveal"><span className="section-eyebrow">Up and running in a moment</span><h2>How it works.</h2><p>No account creation. No import wizard. Start right where you are.</p></div>
+        <div className="steps-grid">
+          {[["01", "Choose a folder", "Select the folder where your Markdown files already live.", FolderOpen], ["02", "Open MarkdownOS", "Your files immediately appear inside your workspace.", FileText], ["03", "Write and organize", "Edit, search, preview, favorite, and organize your notes.", Sparkles]].map(([number, title, body, Icon]) => {
+            const StepIcon = Icon as typeof FolderOpen;
+            return <article className="step-card landing-reveal" key={number as string}><span className="step-number">{number as string}</span><span className="step-icon"><StepIcon size={20} /></span><h3>{title as string}</h3><p>{body as string}</p></article>;
+          })}
+        </div>
+      </section>
+
+      <section className="privacy-section" id="privacy">
+        <div className="privacy-inner">
+          <div className="privacy-copy landing-reveal"><span className="section-eyebrow">Private by architecture</span><h2>Your notes aren't<br />our business.</h2><p>MarkdownOS doesn't require an account or cloud storage. Your notes remain on your machine.</p><div className="privacy-device"><div className="privacy-device-lock"><LockKeyhole size={22} /></div><div><b>YOUR DEVICE</b><span>Local files · Always yours</span></div><Check size={17} /></div></div>
+          <div className="privacy-cards">{[["No account", "Start immediately.", UserIcon], ["No cloud", "Your files don't need to leave your device.", HardDrive], ["No subscription", "MarkdownOS is free.", Heart]].map(([title, body, Icon]) => {
+            const CardIcon = Icon as typeof HardDrive;
+            return <article className="privacy-card landing-reveal" key={title as string}><span><CardIcon size={18} /></span><div><h3>{title as string}</h3><p>{body as string}</p></div><Check size={15} /></article>;
+          })}</div>
+        </div>
+      </section>
+
+      <section className="use-cases-section landing-section">
+        <div className="section-heading landing-reveal"><span className="section-eyebrow">Room for every kind of thinking</span><h2>One workspace.<br />Many kinds of thinking.</h2></div>
+        <div className="use-cases-grid">{useCases.map(({ title, body, icon: Icon, sample }) => <article className="use-case-card landing-reveal" key={title}><div className="use-case-file"><Icon size={15} /><span>{sample}</span><Star size={12} /></div><h3>{title}</h3><p>{body}</p></article>)}</div>
+      </section>
+
+      <section className="product-facts landing-reveal" aria-label="MarkdownOS product characteristics"><span>Product, not popularity.</span><div><b>100%</b><small>Local-first</small></div><div><b>0</b><small>Accounts required</small></div><div><b>0</b><small>Cloud dependency</small></div><div><b>∞</b><small>Markdown files</small></div></section>
+
+      <section className="final-cta landing-reveal">
+        <div><span className="section-eyebrow">A better place for your ideas</span><h2>Start with the files<br />you already have.</h2><p>A better Markdown workspace doesn't need another cloud account.</p><small>Free <i /> Offline <i /> Local-first</small></div>
+        <div className="final-cta-actions"><button className="landing-primary-button" onClick={primaryAction} disabled={!supported && !workspaceReady && !accessNeeded}>{primaryLabel} <ArrowRight size={16} /></button><a className="landing-secondary-button" href="https://github.com/csepriyaranjan" target="_blank" rel="noreferrer">View on GitHub <ArrowUpRight size={15} /></a></div>
+      </section>
+
+      <footer className="landing-footer"><a className="landing-brand" href="#top"><img src="/markdownos-icon.svg" alt="" /><span>MarkdownOS</span></a><p>Your private Markdown workspace.</p><div className="footer-links"><b>Product</b><a href="#features">Features</a><a href="#privacy">Privacy</a><a href="https://github.com/csepriyaranjan" target="_blank" rel="noreferrer">GitHub</a><a href="https://github.com/csepriyaranjan" target="_blank" rel="noreferrer">Download</a></div><div className="footer-bottom"><span>© 2026 MarkdownOS</span><span>Made for people who think in Markdown. <Heart size={12} /></span></div></footer>
+    </div>
   </main>;
+}
+
+function UserIcon({ size = 18 }: { size?: number }) {
+  return <ShieldCheck size={size} />;
 }
