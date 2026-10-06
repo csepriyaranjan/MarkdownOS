@@ -273,4 +273,50 @@ button:disabled { cursor: not-allowed; opacity: .48; }
 }
 
 @media (max-width: 850px) {
+  .topbar { flex-basis: 58px; padding: 0 15px; }
+  .brand-lockup,.topbar-actions { min-width: 0; }
+  .topbar-center { display: none; }
+  .mobile-menu { display: grid; width: 34px; height: 34px; margin-left: -7px; border-radius: 9px; }
+  .app-shell { min-height: 0; }
+  .workspace { position: relative; min-height: 0; }
+  .workspace > .sidebar,.workspace > .file-pane,.workspace > .editor-pane {
+    display: none;
+    width: 100%;
+    min-width: 0;
+    flex: 1 1 100%;
+    border-right: 0;
+  }
+  .workspace > .sidebar.mobile-active,.workspace > .file-pane.mobile-active,.workspace > .editor-pane.mobile-active {
+    display: flex;
+  }
+  .workspace > .sidebar.mobile-active,.workspace > .file-pane.mobile-active { width: 100% !important; }
+  .workspace .resize-handle { display: none; }
+  .mobile-tabbar {
+    z-index: 40;
+    display: flex;
+    flex: 0 0 61px;
+    align-items: center;
+    justify-content: space-around;
+    padding: 3px 10px max(3px,env(safe-area-inset-bottom));
+    border-top: 1px solid #e9ebef;
+    background: rgba(255,255,255,.94);
+    backdrop-filter: blur(20px);
+  }
+  .mobile-tabbar button {
+    display: flex;
+    min-width: 68px;
+    min-height: 47px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    border: 0;
+    border-radius: 9px;
+    color: #a0a4b0;
+    background: transparent;
+    font-size: 8px;
+    cursor: pointer;
+  }
+  .mobile-tabbar button.selected { color: #5c6fdf; }
+  .mobile-tabbar button.selected svg { stroke-width: 2.2; }
 }

@@ -34,6 +34,7 @@ export function MarkdownPreview({ content }: { content: string }) {
         startOnLoad: false,
         securityLevel: "strict",
         suppressErrorRendering: true,
+        htmlLabels: false,
         theme: "default",
         flowchart: { useMaxWidth: true },
       });
