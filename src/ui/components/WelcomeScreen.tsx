@@ -9,9 +9,12 @@ interface WelcomeScreenProps {
   supported: boolean;
   accessNeeded: boolean;
   workspaceReady: boolean;
+  installed: boolean;
+  canInstall: boolean;
   onOpenDashboard: () => void;
   onChoose: () => void;
   onReconnect: () => void;
+  onInstall: () => void;
   onDownload: () => void;
 }
 
@@ -33,11 +36,13 @@ function PencilIcon({ size = 18 }: { size?: number }) {
   return <FileCode2 size={size} />;
 }
 
-export function WelcomeScreen({ supported, accessNeeded, workspaceReady, onOpenDashboard, onChoose, onReconnect, onDownload }: WelcomeScreenProps) {
+export function WelcomeScreen({ supported, accessNeeded, workspaceReady, installed, canInstall, onOpenDashboard, onChoose, onReconnect, onInstall, onDownload }: WelcomeScreenProps) {
   const pageRef = useRef<HTMLDivElement>(null);
   const [activeFeature, setActiveFeature] = useState(0);
   const primaryAction = accessNeeded ? onReconnect : workspaceReady ? onOpenDashboard : onChoose;
   const primaryLabel = accessNeeded ? "Reconnect your folder" : workspaceReady ? "Open your workspace" : "Start with your folder";
+  const navAction = accessNeeded ? onReconnect : workspaceReady ? onOpenDashboard : installed ? onChoose : canInstall ? onInstall : onChoose;
+  const navLabel = accessNeeded ? "Reconnect folder" : workspaceReady || installed ? "Open workspace" : canInstall ? "Install app" : "Get started";
 
   useEffect(() => {
     const page = pageRef.current;
@@ -67,7 +72,10 @@ export function WelcomeScreen({ supported, accessNeeded, workspaceReady, onOpenD
         </nav>
         <div className="landing-nav-actions">
           <a className="nav-github" href="https://github.com/csepriyaranjan" target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={14} /></a>
-          <a className="nav-download" href="https://github.com/csepriyaranjan" target="_blank" rel="noreferrer"><ArrowDownToLine size={15} /> Download</a>
+          <button className="nav-download" onClick={navAction} disabled={!supported && !workspaceReady && !accessNeeded && !canInstall}>
+            {canInstall && !workspaceReady && !accessNeeded ? <ArrowDownToLine size={15} /> : <ArrowRight size={15} />}
+            {navLabel}
+          </button>
         </div>
         <a className="landing-mobile-menu" href="#features" aria-label="Jump to features"><Menu size={20} /></a>
       </header>

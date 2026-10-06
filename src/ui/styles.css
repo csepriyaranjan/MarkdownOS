@@ -1,19 +1,19 @@
 :root {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
-  color: #20232b;
-  background: #f5f5f7;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #111827;
+  background: #f8fafc;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-optical-sizing: auto;
-  --accent: #5267e8;
-  --accent-dark: #4256d7;
-  --ink: #20232b;
-  --muted: #858a98;
-  --subtle: #a5a9b4;
-  --line: #eceef2;
-  --canvas: #f7f8fa;
+  --accent: #4f46e5;
+  --accent-dark: #3730a3;
+  --ink: #111827;
+  --muted: #667085;
+  --subtle: #98a2b3;
+  --line: #e7ebf1;
+  --canvas: #f8fafc;
   --surface: #fff;
   --sidebar: #fbfbfc;
   --radius: 15px;
@@ -535,3 +535,60 @@ button:disabled { cursor: not-allowed; opacity: .48; }
   .landing-page *, .landing-page *::before, .landing-page *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .landing-reveal { opacity: 1; transform: none; }
 }
+
+/* Keep the workspace on the same navy, indigo, and soft-gray system as the landing page. */
+.app-shell:not(.welcome-shell) {
+  --accent: #4f46e5;
+  --accent-dark: #3730a3;
+  --ink: #111827;
+  --muted: #667085;
+  --subtle: #98a2b3;
+  --line: #e7ebf1;
+  --canvas: #f8fafc;
+  --sidebar: #fbfcfe;
+  color: var(--ink);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--canvas);
+}
+.app-shell:not(.welcome-shell) .topbar { border-bottom-color: #e7ebf1; }
+.app-shell:not(.welcome-shell) .brand-icon { border-color: #e3e1ff; color: #4f46e5; background: #f1f0ff; box-shadow: 0 2px 7px rgba(55,48,163,.08); }
+.app-shell:not(.welcome-shell) .brand-copy strong,
+.app-shell:not(.welcome-shell) .pane-heading h2,
+.app-shell:not(.welcome-shell) .file-title-line h1,
+.app-shell:not(.welcome-shell) .markdown-preview h1,
+.app-shell:not(.welcome-shell) .markdown-preview h2,
+.app-shell:not(.welcome-shell) .markdown-preview h3 { color: #111827; }
+.app-shell:not(.welcome-shell) .brand-copy span,
+.app-shell:not(.welcome-shell) .breadcrumbs,
+.app-shell:not(.welcome-shell) .file-title-line > div > span,
+.app-shell:not(.welcome-shell) .workspace-copy span { color: #667085; }
+.app-shell:not(.welcome-shell) .dashboard-nav-button,
+.app-shell:not(.welcome-shell) .install-button { border-color: #d9d6fe; color: #4338ca; }
+.app-shell:not(.welcome-shell) .dashboard-nav-button:hover:not(:disabled),
+.app-shell:not(.welcome-shell) .install-button:hover { border-color: #b8b2f8; color: #3730a3; background: #f5f4ff; }
+.app-shell:not(.welcome-shell) .sidebar { border-right-color: #e7ebf1; background: #fbfcfe; }
+.app-shell:not(.welcome-shell) .file-pane { border-right-color: #e7ebf1; }
+.app-shell:not(.welcome-shell) .nav-row.active,
+.app-shell:not(.welcome-shell) .folder-tree-item.is-active > .folder-row,
+.app-shell:not(.welcome-shell) .folder-row:hover { color: #4338ca; background: #f1f0ff; }
+.app-shell:not(.welcome-shell) .nav-row.active > svg,
+.app-shell:not(.welcome-shell) .folder-select:hover,
+.app-shell:not(.welcome-shell) .is-active > .folder-row .folder-select,
+.app-shell:not(.welcome-shell) .tag-chip:hover,
+.app-shell:not(.welcome-shell) .tag-chip.selected,
+.app-shell:not(.welcome-shell) .recent-row:hover { color: #4338ca; }
+.app-shell:not(.welcome-shell) .folder-row-icon,
+.app-shell:not(.welcome-shell) .workspace-avatar,
+.app-shell:not(.welcome-shell) .note-icon { color: #4f46e5; }
+.app-shell:not(.welcome-shell) .workspace-avatar,
+.app-shell:not(.welcome-shell) .note-card.is-selected .note-icon { border-color: #e3e1ff; background: #f1f0ff; }
+.app-shell:not(.welcome-shell) .note-card.is-selected { border-color: #dfdcff; background: #f8f7ff; }
+.app-shell:not(.welcome-shell) .note-card-title strong,
+.app-shell:not(.welcome-shell) .workspace-copy strong { color: #344054; }
+.app-shell:not(.welcome-shell) .primary-button { background: #3730a3; box-shadow: 0 4px 11px rgba(55,48,163,.16); }
+.app-shell:not(.welcome-shell) .primary-button:hover { box-shadow: 0 6px 15px rgba(55,48,163,.24); }
+.app-shell:not(.welcome-shell) .search-box:focus-within { border-color: #a9a3f4; box-shadow: 0 0 0 3px rgba(79,70,229,.09); }
+.app-shell:not(.welcome-shell) .segmented-control button.selected { color: #4338ca; }
+.app-shell:not(.welcome-shell) .markdown-preview a,
+.app-shell:not(.welcome-shell) .markdown-preview :not(pre)>code { color: #4338ca; }
+.app-shell:not(.welcome-shell) .markdown-preview blockquote { border-left-color: #7c73e8; }
