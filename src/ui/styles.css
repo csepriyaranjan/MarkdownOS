@@ -536,6 +536,22 @@ button:disabled { cursor: not-allowed; opacity: .48; }
   .landing-reveal { opacity: 1; transform: none; }
 }
 
+.creator-section { display: grid; width: min(1120px,88%); margin: 0 auto 58px; padding: 28px 0; grid-template-columns: 58px minmax(0,1fr) auto; align-items: center; gap: 18px; border-top: 1px solid #e9ecf1; border-bottom: 1px solid #e9ecf1; }
+.creator-mark { display: grid; width: 54px; height: 54px; place-items: center; border: 1px solid #cfe2d8; border-radius: 50%; color: #176a4d; background: #edf6f0; font-size: 14px; font-weight: 700; }
+.creator-copy .section-eyebrow { color: #237a59; font-size: 8px; }.creator-copy h2 { margin: 4px 0; color: #202938; font-size: 17px; font-weight: 680; }.creator-copy > b { color: #596477; font-size: 10px; font-weight: 600; }.creator-copy p { max-width: 570px; margin: 7px 0 0; color: #737d8e; font-size: 10px; line-height: 1.6; }
+.creator-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; }.creator-links a { display: inline-flex; align-items: center; gap: 5px; color: #286c52; font-size: 9px; font-weight: 620; text-decoration: none; }.creator-links a:hover { color: #174b39; text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 780px) {
+  .creator-section { width: 90%; grid-template-columns: 54px minmax(0,1fr); gap: 15px; }
+  .creator-links { grid-column: 2; justify-content: flex-start; }
+}
+@media (max-width: 520px) {
+  .creator-section { width: 90%; margin-bottom: 42px; grid-template-columns: 42px minmax(0,1fr); gap: 12px; }
+  .creator-mark { width: 42px; height: 42px; font-size: 11px; }
+  .creator-copy h2 { font-size: 15px; }
+  .creator-copy > b,.creator-copy p { font-size: 9px; }
+  .creator-links { grid-column: 1/-1; justify-content: flex-start; gap: 14px; }
+}
+
 /* Keep the workspace on the same navy, indigo, and soft-gray system as the landing page. */
 .app-shell:not(.welcome-shell) {
   --accent: #4f46e5;

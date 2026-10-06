@@ -1,6 +1,6 @@
-# MarkdownOS
+# MD Studio
 
-MarkdownOS is a local-first workspace for Markdown notes and Mermaid diagrams. It combines a folder tree, searchable note list, and editor/preview in one responsive interface. Your notes stay in the folder you choose; the app does not upload them to a server.
+MD Studio is a local-first workspace for Markdown notes and Mermaid diagrams. It combines a folder tree, searchable note list, and editor/preview in one responsive interface. Your notes stay in the folder you choose; the app does not upload them to a server.
 
 ## Run the app
 
@@ -22,7 +22,7 @@ The build command runs the TypeScript project build before creating the Vite pro
 
 ## Technology and why it is used
 
-| Technology | Use in MarkdownOS |
+| Technology | Use in MD Studio |
 | --- | --- |
 | React 18 | Builds the interactive workspace from reusable UI components. |
 | TypeScript | Gives the UI, note tree, and storage adapter explicit types. |
@@ -42,7 +42,7 @@ The build command runs the TypeScript project build before creating the Vite pro
 
 The browser folder picker is opened from the welcome screen. The app requests read/write access, keeps the directory handle in memory, and stores it in IndexedDB so it can try to restore the workspace next time. If permission has expired, the user can reconnect the folder. Folder access requires a supported browser and a secure context (normally `localhost` or HTTPS).
 
-This is real folder access, not an upload. Browser support for writable directory handles is not universal; MarkdownOS explains when the API is unavailable. A `webkitdirectory` import is not used as a writable substitute.
+This is real folder access, not an upload. Browser support for writable directory handles is not universal; MD Studio explains when the API is unavailable. A `webkitdirectory` import is not used as a writable substitute.
 
 ### 2. Scan and build the library
 
@@ -90,4 +90,4 @@ public/
   manifest.webmanifest              PWA metadata
   sw.js                             App-shell and runtime resource caching
 ```
-"# MarkdownOS" 
+"# MD Studio" 
