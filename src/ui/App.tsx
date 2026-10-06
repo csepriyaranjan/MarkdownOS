@@ -70,6 +70,11 @@ function isInstalledMobilePwa(): boolean {
   return standalone && window.matchMedia("(pointer: coarse)").matches;
 }
 
+function isInstalledApp(): boolean {
+  return window.matchMedia("(display-mode: standalone)").matches
+    || Boolean((navigator as Navigator & { standalone?: boolean }).standalone);
+}
+
 function App() {
   const adapter = useMemo(() => new BrowserFileSystemAdapter(), []);
   const [tree, setTree] = useState<FolderNode | null>(null);
@@ -98,6 +103,7 @@ function App() {
   const [dashboardOpen, setDashboardOpen] = useState(() => window.location.pathname.replace(/\/+$/, "") === "/workspace");
   const [startupError, setStartupError] = useState("");
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [installed, setInstalled] = useState(isInstalledApp);
   const [installPrompt, setInstallPrompt] = useState<Event & { prompt: () => Promise<void>; userChoice: Promise<{ outcome: string }> } | null>(null);
   const [sidebarWidth, setSidebarWidth] = useState(268);
   const [fileListWidth, setFileListWidth] = useState(330);
@@ -152,6 +158,18 @@ function App() {
     };
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  useEffect(() => {
+    const displayMode = window.matchMedia("(display-mode: standalone)");
+    const handleInstalled = () => setInstalled(true);
+    const handleDisplayModeChange = () => setInstalled(isInstalledApp());
+    window.addEventListener("appinstalled", handleInstalled);
+    displayMode.addEventListener("change", handleDisplayModeChange);
+    return () => {
+      window.removeEventListener("appinstalled", handleInstalled);
+      displayMode.removeEventListener("change", handleDisplayModeChange);
+    };
   }, []);
 
   useEffect(() => {
@@ -461,7 +479,8 @@ function App() {
   async function installApp(): Promise<void> {
     if (!installPrompt) return;
     await installPrompt.prompt();
-    await installPrompt.userChoice;
+    const choice = await installPrompt.userChoice;
+    if (choice.outcome === "accepted") setInstalled(true);
     setInstallPrompt(null);
   }
 
@@ -520,9 +539,12 @@ function App() {
           supported={isSupported}
           accessNeeded={rootAccessNeeded}
           workspaceReady={Boolean(tree) && !rootAccessNeeded}
+          installed={installed}
+          canInstall={Boolean(installPrompt)}
           onOpenDashboard={() => navigateToPage(true)}
           onChoose={() => void chooseFolder()}
           onReconnect={() => void reconnectFolder()}
+          onInstall={() => void installApp()}
           onDownload={() => {
             const blob = new Blob(["# My first note\n\nYour thoughts stay yours.\n"], { type: "text/markdown" });
             const url = URL.createObjectURL(blob);
