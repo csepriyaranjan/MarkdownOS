@@ -468,7 +468,7 @@ function App() {
   const welcome = !tree || !dashboardOpen;
 
   return (
-    <div className="app-shell">
+    <div className={`app-shell ${welcome ? "welcome-shell" : ""}`}>
       <header className="topbar">
         <div className="brand-lockup">
           <button
