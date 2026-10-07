@@ -1,6 +1,6 @@
 {
-  "name": "MD Studio",
-  "short_name": "MD Studio",
+  "name": "MarkdownOS",
+  "short_name": "MarkdownOS",
   "description": "A thoughtful, offline-first home for your Markdown files.",
   "start_url": "/",
   "display": "standalone",

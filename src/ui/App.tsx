@@ -500,7 +500,7 @@ function App() {
             }}
           >{mobilePane === "folders" ? <X size={19} /> : <Menu size={19} />}</button>
           <div className="brand-icon"><Sparkles size={17} strokeWidth={2.3} /></div>
-          <div className="brand-copy"><strong>MD Studio</strong><span>{tree ? adapter.rootName : "Your private writing space"}</span></div>
+          <div className="brand-copy"><strong>MarkdownOS</strong><span>{tree ? adapter.rootName : "Your private writing space"}</span></div>
         </div>
         <div className="topbar-center">
           {welcome
@@ -531,7 +531,7 @@ function App() {
         </div>
       </header>
 
-      {!isSupported && <div className="browser-warning"><CircleHelp size={16} /> Writable folder access requires a recent Chromium-based browser. MD Studio never uploads your files; unsupported browsers can still download exported notes.</div>}
+      {!isSupported && <div className="browser-warning"><CircleHelp size={16} /> Writable folder access requires a recent Chromium-based browser. MarkdownOS never uploads your files; unsupported browsers can still download exported notes.</div>}
       {startupError && !tree && <div className="browser-warning warning-error"><CircleHelp size={16} />{startupError}</div>}
 
       {welcome ? (

@@ -62,9 +62,9 @@ export function WelcomeScreen({ supported, accessNeeded, workspaceReady, install
   return <main className="welcome-stage landing-stage" ref={pageRef}>
     <div className="landing-page">
       <header className="landing-nav">
-        <a className="landing-brand" href="#top" aria-label="MD Studio home">
+        <a className="landing-brand" href="#top" aria-label="MarkdownOS home">
           <img src="/markdownos-icon.svg" alt="" />
-          <span>MD Studio</span>
+          <span>MarkdownOS</span>
         </a>
         <nav className="landing-nav-links" aria-label="Main navigation">
           <a href="#features">Features</a><a href="#how-it-works">How it works</a>
@@ -93,13 +93,13 @@ export function WelcomeScreen({ supported, accessNeeded, workspaceReady, install
           <div className="hero-proof"><span><Check /> Free forever</span><span><Check /> Works offline</span><span><Check /> No account required</span></div>
         </div>
 
-        <div className="hero-visual landing-reveal" aria-label="Preview of the MD Studio workspace">
+        <div className="hero-visual landing-reveal" aria-label="Preview of the MarkdownOS workspace">
           <div className="mockup-glow" />
           <div className="workspace-preview">
             <div className="preview-topbar"><div className="preview-window-controls"><i /><i /><i /></div><span>My Knowledge</span><div className="preview-status"><span /> Local</div></div>
             <div className="preview-workspace">
               <aside className="preview-sidebar">
-                <div className="preview-brand"><span><FileText size={13} /></span>MD Studio</div>
+                <div className="preview-brand"><span><FileText size={13} /></span>MarkdownOS</div>
                 <div className="preview-section-label">WORKSPACE</div>
                 <div className="preview-nav-item active"><FileText size={13} /> All Notes <b>24</b></div>
                 <div className="preview-nav-item"><Clock3 size={13} /> Recent</div>
@@ -130,7 +130,7 @@ export function WelcomeScreen({ supported, accessNeeded, workspaceReady, install
         </div>
       </section>
 
-      <section className="value-strip landing-reveal" aria-label="MD Studio product facts">
+      <section className="value-strip landing-reveal" aria-label="MarkdownOS product facts">
         <div><span className="value-icon"><Sparkles size={18} /></span><p><b>100% Free</b><small>No subscription.</small></p></div>
         <div><span className="value-icon"><HardDrive size={18} /></span><p><b>Local-first</b><small>Your files stay on your device.</small></p></div>
         <div><span className="value-icon"><Network size={18} /></span><p><b>Offline</b><small>No internet required.</small></p></div>
@@ -163,7 +163,7 @@ export function WelcomeScreen({ supported, accessNeeded, workspaceReady, install
             </div>
           </div>
           <div className="dark-product-shot landing-reveal">
-            <div className="dark-shot-bar"><div className="preview-window-controls"><i /><i /><i /></div><span>MD Studio <small>— System Design</small></span><span className="shot-saved"><Check size={12} /> Saved</span></div>
+            <div className="dark-shot-bar"><div className="preview-window-controls"><i /><i /><i /></div><span>MarkdownOS <small>— System Design</small></span><span className="shot-saved"><Check size={12} /> Saved</span></div>
             <div className="dark-shot-content"><aside><div><Folder size={13} /> System Design</div><span>⌁ architecture.md</span><span>⌁ api-design.md</span><span>⌁ database.md</span><span>⌁ decisions.md</span><div><Folder size={13} /> Product Notes</div><div><Folder size={13} /> Journal</div></aside>
               <article><div className="dark-shot-breadcrumb">SYSTEM DESIGN / ARCHITECTURE.MD</div><h3>System architecture</h3><p>A clear picture of how the pieces fit together.</p><div className="dark-code"><span># The request lifecycle</span><br /><br />```mermaid<br />flowchart LR<br />&nbsp; Client --&gt; API<br />&nbsp; API --&gt; Database<br />```</div><div className="dark-flow"><span>Client</span><i>→</i><span>API</span><i>→</i><span>Database</span></div></article>
             </div>
@@ -175,14 +175,14 @@ export function WelcomeScreen({ supported, accessNeeded, workspaceReady, install
         <div className="section-heading"><span className="section-eyebrow">A different kind of workspace</span><h2>SaaS experience.<br />Local ownership.</h2><p>Everything familiar about a great workspace, without giving up control of your notes.</p></div>
         <div className="comparison-grid">
           <article className="comparison-card"><span className="comparison-label">THE CLOUD MODEL</span><h3>Traditional cloud notes</h3><ul><li><span><Network /></span> Cloud account</li><li><span><Network /></span> Cloud database</li><li><span><Network /></span> Internet dependency</li><li><span><Network /></span> Subscription</li><li><span><Network /></span> Data stored remotely</li></ul></article>
-          <article className="comparison-card comparison-local"><span className="comparison-label"><span /> THE MD STUDIO WAY</span><h3>MD Studio</h3><ul><li><span><Check /></span> Local folder</li><li><span><Check /></span> Local Markdown files</li><li><span><Check /></span> Works offline</li><li><span><Check /></span> Free</li><li><span><Check /></span> You own the files</li></ul></article>
+          <article className="comparison-card comparison-local"><span className="comparison-label"><span /> THE MarkdownOS WAY</span><h3>MarkdownOS</h3><ul><li><span><Check /></span> Local folder</li><li><span><Check /></span> Local Markdown files</li><li><span><Check /></span> Works offline</li><li><span><Check /></span> Free</li><li><span><Check /></span> You own the files</li></ul></article>
         </div>
       </section>
 
       <section className="file-ownership-visual landing-reveal">
-        <div className="ownership-heading"><span className="section-eyebrow">No lock-in. No mystery.</span><h2>Your folder is the source of truth.</h2><p>MD Studio is the workspace. Your folder remains yours.</p></div>
-        <div className="computer-diagram"><div className="computer-label"><HardDrive size={14} /> YOUR COMPUTER</div><div className="computer-folder"><div className="folder-title"><FolderOpen size={17} /> My Knowledge</div><span><Folder size={13} /> Product Notes/</span><span><Folder size={13} /> System Design/</span><span><Folder size={13} /> Journal/</span><b>*.md</b></div><div className="diagram-connector"><span /></div><div className="os-node"><img src="/markdownos-icon.svg" alt="" /> MD Studio</div></div>
-        <p className="ownership-caption"><b>MD Studio is the workspace.</b><br />Your folder remains the source of truth.</p>
+        <div className="ownership-heading"><span className="section-eyebrow">No lock-in. No mystery.</span><h2>Your folder is the source of truth.</h2><p>MarkdownOS is the workspace. Your folder remains yours.</p></div>
+        <div className="computer-diagram"><div className="computer-label"><HardDrive size={14} /> YOUR COMPUTER</div><div className="computer-folder"><div className="folder-title"><FolderOpen size={17} /> My Knowledge</div><span><Folder size={13} /> Product Notes/</span><span><Folder size={13} /> System Design/</span><span><Folder size={13} /> Journal/</span><b>*.md</b></div><div className="diagram-connector"><span /></div><div className="os-node"><img src="/markdownos-icon.svg" alt="" /> MarkdownOS</div></div>
+        <p className="ownership-caption"><b>MarkdownOS is the workspace.</b><br />Your folder remains the source of truth.</p>
       </section>
 
       <section className="developer-section landing-section" id="developers">
@@ -204,7 +204,7 @@ export function WelcomeScreen({ supported, accessNeeded, workspaceReady, install
 
       <section className="privacy-section" id="privacy">
         <div className="privacy-inner">
-          <div className="privacy-copy landing-reveal"><span className="section-eyebrow">Private by architecture</span><h2>Your notes aren't<br />our business.</h2><p>MD Studio doesn't require an account or cloud storage. Your notes remain on your machine.</p><div className="privacy-device"><div className="privacy-device-lock"><LockKeyhole size={22} /></div><div><b>YOUR DEVICE</b><span>Local files · Always yours</span></div><Check size={17} /></div></div>
+          <div className="privacy-copy landing-reveal"><span className="section-eyebrow">Private by architecture</span><h2>Your notes aren't<br />our business.</h2><p>MarkdownOS doesn't require an account or cloud storage. Your notes remain on your machine.</p><div className="privacy-device"><div className="privacy-device-lock"><LockKeyhole size={22} /></div><div><b>YOUR DEVICE</b><span>Local files · Always yours</span></div><Check size={17} /></div></div>
           <div className="privacy-cards">{[["No account", "Start immediately.", UserIcon], ["No cloud", "Your files don't need to leave your device.", HardDrive], ["No subscription", "MarkdownOS is free.", Heart]].map(([title, body, Icon]) => {
             const CardIcon = Icon as typeof HardDrive;
             return <article className="privacy-card landing-reveal" key={title as string}><span><CardIcon size={18} /></span><div><h3>{title as string}</h3><p>{body as string}</p></div><Check size={15} /></article>;
@@ -217,7 +217,7 @@ export function WelcomeScreen({ supported, accessNeeded, workspaceReady, install
         <div className="use-cases-grid">{useCases.map(({ title, body, icon: Icon, sample }) => <article className="use-case-card landing-reveal" key={title}><div className="use-case-file"><Icon size={15} /><span>{sample}</span><Star size={12} /></div><h3>{title}</h3><p>{body}</p></article>)}</div>
       </section>
 
-      <section className="product-facts landing-reveal" aria-label="MD Studio product characteristics"><span>Product, not popularity.</span><div><b>100%</b><small>Local-first</small></div><div><b>0</b><small>Accounts required</small></div><div><b>0</b><small>Cloud dependency</small></div><div><b>∞</b><small>Markdown files</small></div></section>
+      <section className="product-facts landing-reveal" aria-label="MarkdownOS product characteristics"><span>Product, not popularity.</span><div><b>100%</b><small>Local-first</small></div><div><b>0</b><small>Accounts required</small></div><div><b>0</b><small>Cloud dependency</small></div><div><b>∞</b><small>Markdown files</small></div></section>
 
       <section className="final-cta landing-reveal">
         <div><span className="section-eyebrow">A better place for your ideas</span><h2>Start with the files<br />you already have.</h2><p>A better Markdown workspace doesn't need another cloud account.</p><small>Free <i /> Offline <i /> Local-first</small></div>
@@ -229,7 +229,7 @@ export function WelcomeScreen({ supported, accessNeeded, workspaceReady, install
         <div className="creator-copy"><span className="section-eyebrow">Created by</span><h2>Priyaranjan</h2><b>Full-Stack Engineer · Java Backend</b><p>I build reliable applications and backend systems, with a current focus on Spring Boot, PostgreSQL, JPA/Hibernate, API design, and system design.</p></div>
         <div className="creator-links"><a href="https://csepriyaranjan.ventranexa.in" target="_blank" rel="noreferrer"><ArrowUpRight size={15} /> Portfolio</a><a href="https://github.com/csepriyaranjan" target="_blank" rel="noreferrer"><Github size={15} /> GitHub</a><a href="https://www.linkedin.com/in/csepriyaranjan" target="_blank" rel="noreferrer"><Linkedin size={15} /> LinkedIn</a><a href="mailto:cse.priyaranjan@gmail.com"><Mail size={15} /> Email</a></div>
       </section>
-      <footer className="landing-footer"><a className="landing-brand" href="#top"><img src="/markdownos-icon.svg" alt="" /><span>MD Studio</span></a><p>Your private Markdown workspace.</p><div className="footer-links"><b>Product</b><a href="#features">Features</a><a href="#privacy">Privacy</a><a href="#creator">Creator</a><a href="https://github.com/csepriyaranjan/MarkdownOS" target="_blank" rel="noreferrer">GitHub</a></div><div className="footer-bottom"><span>© 2026 MD Studio</span><span>Made for people who think in Markdown. <Heart size={12} /></span></div></footer>
+      <footer className="landing-footer"><a className="landing-brand" href="#top"><img src="/markdownos-icon.svg" alt="" /><span>MarkdownOS</span></a><p>Your private Markdown workspace.</p><div className="footer-links"><b>Product</b><a href="#features">Features</a><a href="#privacy">Privacy</a><a href="#creator">Creator</a><a href="https://github.com/csepriyaranjan/MarkdownOS" target="_blank" rel="noreferrer">GitHub</a></div><div className="footer-bottom"><span>© 2026 MarkdownOS</span><span>Made for people who think in Markdown. <Heart size={12} /></span></div></footer>
     </div>
   </main>;
 }
