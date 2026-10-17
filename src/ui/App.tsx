@@ -1,6 +1,6 @@
 import {
   ArrowDownToLine, Check, CircleHelp, Download, FileText, Folder, FolderOpen, Menu,
-  Pencil, Settings2, ShieldCheck, Sparkles, Trash2, X,
+  Pencil, Settings2, ShieldCheck, Trash2, X,
 } from "lucide-react";
 import DOMPurify from "dompurify";
 import { marked } from "marked";
@@ -500,7 +500,7 @@ function App() {
             }}
           >{mobilePane === "folders" ? <X size={19} /> : <Menu size={19} />}</button>
           <button className="brand-home-link" onClick={() => navigateToPage(true)} disabled={!tree} aria-label="Open MarkdownOS workspace">
-            <span className="brand-icon"><Sparkles size={17} strokeWidth={2.3} /></span>
+            <span className="brand-icon"><img src="/markdownos-folder-icon.svg" alt="" /></span>
             <span className="brand-copy"><strong>MarkdownOS</strong><span>{tree ? adapter.rootName : "Your private writing space"}</span></span>
           </button>
         </div>

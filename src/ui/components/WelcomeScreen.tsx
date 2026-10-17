@@ -1,6 +1,6 @@
 import {
   ArrowDownToLine, ArrowRight, ArrowUpRight, Check, ChevronRight, Clock3, Code2, FileCode2,
-  FileText, Folder, FolderOpen, Github, HardDrive, Heart, Linkedin, LockKeyhole, Mail, Menu, Network, Search,
+  FileText, Folder, FolderOpen, GitBranch, Github, HardDrive, Heart, Linkedin, LockKeyhole, Mail, Menu, Network, Search,
   ShieldCheck, Sparkles, Star,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -22,6 +22,7 @@ const features = [
   { title: "Write in Markdown", body: "A focused editor for writing, editing, and organizing the files you already know.", icon: FileCode2 },
   { title: "Your folders. Your files.", body: "Open a folder and work directly with your Markdown files. Nothing to import or migrate.", icon: FolderOpen },
   { title: "Find anything instantly", body: "Search across filenames, folders, tags, and note content without breaking your flow.", icon: Search },
+  { title: "Diagram editor", body: "Create, arrange, connect, and edit architecture diagrams directly beside your Markdown.", icon: GitBranch },
   { title: "Turn ideas into diagrams", body: "Write Mermaid right inside your Markdown and see your diagrams rendered inline.", icon: Network },
 ];
 
@@ -63,7 +64,7 @@ export function WelcomeScreen({ supported, accessNeeded, workspaceReady, install
     <div className="landing-page">
       <header className="landing-nav">
         <a className="landing-brand" href="#top" aria-label="MarkdownOS home">
-          <img src="/markdownos-icon.svg" alt="" />
+          <img src="/markdownos-folder-icon.svg" alt="" />
           <span>MarkdownOS</span>
         </a>
         <nav className="landing-nav-links" aria-label="Main navigation">
@@ -146,7 +147,8 @@ export function WelcomeScreen({ supported, accessNeeded, workspaceReady, install
               {index === 0 && <div className="demo-editor"><div><span /><span /><span /> <small>note.md</small></div><pre><i>#</i> Building with intention{"\n\n"}The best tools don't ask{"\n"}for your attention.{"\n\n"}<i>##</i> Keep what matters close</pre></div>}
               {index === 1 && <div className="demo-files"><b><Folder size={14} /> My Knowledge</b><span>├─ <Folder size={12} /> Notes</span><span>├─ <Folder size={12} /> Projects</span><span>├─ <Folder size={12} /> System Design</span><span>└─ <Folder size={12} /> Journal</span></div>}
               {index === 2 && <div className="demo-search"><label><Search size={13} /> system design <kbd>ESC</kbd></label><span><FileText size={13} /><b>System architecture</b><small>System Design / architecture.md</small><ChevronRight size={13} /></span><span><FileText size={13} /><b>Design principles</b><small>Product Notes / principles.md</small><ChevronRight size={13} /></span></div>}
-              {index === 3 && <div className="demo-mermaid"><code>flowchart TD<br />&nbsp; A[Client] --&gt; B[API]<br />&nbsp; B --&gt; C[(Database)]</code><div><span>Client</span><i>↓</i><span>API</span><i>↓</i><span>Database</span></div></div>}
+              {index === 3 && <div className="demo-mermaid"><code>diagram editor<br />&nbsp; Client --&gt; API<br />&nbsp; API --&gt; Database</code><div><span>Client</span><i>↓</i><span>API</span><i>↓</i><span>Database</span></div></div>}
+              {index === 4 && <div className="demo-mermaid"><code>flowchart TD<br />&nbsp; A[Client] --&gt; B[API]<br />&nbsp; B --&gt; C[(Database)]</code><div><span>Client</span><i>↓</i><span>API</span><i>↓</i><span>Database</span></div></div>}
             </div>
           </button>)}
         </div>
@@ -181,7 +183,7 @@ export function WelcomeScreen({ supported, accessNeeded, workspaceReady, install
 
       <section className="file-ownership-visual landing-reveal">
         <div className="ownership-heading"><span className="section-eyebrow">No lock-in. No mystery.</span><h2>Your folder is the source of truth.</h2><p>MarkdownOS is the workspace. Your folder remains yours.</p></div>
-        <div className="computer-diagram"><div className="computer-label"><HardDrive size={14} /> YOUR COMPUTER</div><div className="computer-folder"><div className="folder-title"><FolderOpen size={17} /> My Knowledge</div><span><Folder size={13} /> Product Notes/</span><span><Folder size={13} /> System Design/</span><span><Folder size={13} /> Journal/</span><b>*.md</b></div><div className="diagram-connector"><span /></div><div className="os-node"><img src="/markdownos-icon.svg" alt="" /> MarkdownOS</div></div>
+        <div className="computer-diagram"><div className="computer-label"><HardDrive size={14} /> YOUR COMPUTER</div><div className="computer-folder"><div className="folder-title"><FolderOpen size={17} /> My Knowledge</div><span><Folder size={13} /> Product Notes/</span><span><Folder size={13} /> System Design/</span><span><Folder size={13} /> Journal/</span><b>*.md</b></div><div className="diagram-connector"><span /></div><div className="os-node"><img src="/markdownos-folder-icon.svg" alt="" /> MarkdownOS</div></div>
         <p className="ownership-caption"><b>MarkdownOS is the workspace.</b><br />Your folder remains the source of truth.</p>
       </section>
 
@@ -225,11 +227,10 @@ export function WelcomeScreen({ supported, accessNeeded, workspaceReady, install
       </section>
 
       <section className="creator-section landing-reveal" id="creator" aria-label="About the developer">
-        <div className="creator-mark" aria-hidden="true">PK</div>
-        <div className="creator-copy"><span className="section-eyebrow">Created by</span><h2>Priyaranjan</h2><b>Full-Stack Engineer · Java Backend</b><p>I build reliable applications and backend systems, with a current focus on Spring Boot, PostgreSQL, JPA/Hibernate, API design, and system design.</p></div>
-        <div className="creator-links"><a href="https://csepriyaranjan.ventranexa.in" target="_blank" rel="noreferrer"><ArrowUpRight size={15} /> Portfolio</a><a href="https://github.com/csepriyaranjan" target="_blank" rel="noreferrer"><Github size={15} /> GitHub</a><a href="https://www.linkedin.com/in/csepriyaranjan" target="_blank" rel="noreferrer"><Linkedin size={15} /> LinkedIn</a><a href="mailto:cse.priyaranjan@gmail.com"><Mail size={15} /> Email</a></div>
+        <div className="creator-photo-panel"><img src="/image.png" alt="Priyaranjan" /><span>PK / 01</span></div>
+        <div className="creator-profile-body"><div className="creator-card-meta"><span><i /> Open to opportunities</span><small>PK / 01</small></div><span className="section-eyebrow">A little about me</span><h2>Priyaranjan</h2><b>Full-Stack Engineer <i>·</i> Java Backend</b><div className="creator-journey"><span>Building</span><i>→</i><span>Learning</span><i>→</i><span>Improving</span></div><p>I build reliable applications and backend systems, with a current focus on Spring Boot, PostgreSQL, JPA/Hibernate, API design, and system design.</p><div className="creator-links"><a className="creator-portfolio" href="https://csepriyaranjan.ventranexa.in" target="_blank" rel="noreferrer">Portfolio <ArrowUpRight size={15} /></a><a href="https://github.com/csepriyaranjan" target="_blank" rel="noreferrer" aria-label="GitHub"><Github size={16} /></a><a href="https://www.linkedin.com/in/csepriyaranjan" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin size={16} /></a><a href="mailto:cse.priyaranjan@gmail.com" aria-label="Email"><Mail size={16} /></a></div></div>
       </section>
-      <footer className="landing-footer"><a className="landing-brand" href="#top"><img src="/markdownos-icon.svg" alt="" /><span>MarkdownOS</span></a><p>Your private Markdown workspace.</p><div className="footer-links"><b>Product</b><a href="#features">Features</a><a href="#privacy">Privacy</a><a href="#creator">Creator</a><a href="https://github.com/csepriyaranjan/MarkdownOS" target="_blank" rel="noreferrer">GitHub</a></div><div className="footer-bottom"><span>© 2026 MarkdownOS</span><span>Made for people who think in Markdown. <Heart size={12} /></span></div></footer>
+      <footer className="landing-footer"><a className="landing-brand" href="#top"><img src="/markdownos-folder-icon.svg" alt="" /><span>MarkdownOS</span></a><p>Your private Markdown workspace.</p><div className="footer-links"><b>Product</b><a href="#features">Features</a><a href="#privacy">Privacy</a><a href="#creator">Creator</a><a href="https://github.com/csepriyaranjan/MarkdownOS" target="_blank" rel="noreferrer">GitHub</a></div><div className="footer-bottom"><span>© 2026 MarkdownOS</span><span>Made for people who think in Markdown. <Heart size={12} /></span></div></footer>
     </div>
   </main>;
 }
