@@ -1,0 +1,197 @@
+.diagram-template-select { display: flex; align-items: center; gap: 5px; color: #87928a; font-size: 9px; }
+.diagram-template-select select,.diagram-connection-label { max-width: 120px; min-height: 28px; padding: 0 6px; border: 1px solid #e2e8e3; border-radius: 6px; color: #58665d; background: #fff; font-size: 9px; }
+.diagram-workspace { grid-template-columns: 220px minmax(0,1fr) !important; }
+.diagram-component-library { display: flex; min-width: 0; min-height: 0; flex-direction: column; border-right: 1px solid #e0e6e1; background: #fff; }
+.diagram-library-heading { justify-content: flex-end; }
+.diagram-library-heading { display: flex; min-height: 48px; align-items: center; gap: 7px; padding: 5px 9px; border-bottom: 1px solid #edf0ed; }
+.diagram-library-heading strong { flex: 0 0 auto; color: #435048; font-size: 10px; }
+.diagram-library-heading span { min-width: 0; flex: 1; color: #9aa39c; font-size: 8px; }
+.diagram-library-scroll { min-height: 0; flex: 1; overflow: auto; padding: 0 9px 10px; scrollbar-width: thin; }
+.diagram-library-scroll section { margin-top: 12px; }
+.diagram-library-scroll h3 { margin: 0 4px 5px; color: #99a29c; font-size: 8px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.diagram-library-scroll section > div { display: grid; gap: 2px; }
+.diagram-library-scroll button { display: flex; min-height: 34px; align-items: center; gap: 8px; padding: 3px 5px; border: 1px solid transparent; border-radius: 6px; color: #536057; background: transparent; text-align: left; font-size: 9px; cursor: grab; }
+.diagram-library-scroll button:hover,.diagram-library-scroll button:focus-visible { border-color: #e0e9e2; color: #315e45; background: #f4f8f5; }
+.diagram-library-icon { display: grid; width: 25px; height: 25px; flex: 0 0 25px; place-items: center; border-radius: 6px; }
+.tone-teal { color: #287c73; background: #e5f4f1; }.tone-blue { color: #386e9b; background: #e8f1f8; }.tone-amber { color: #a7782c; background: #faf2df; }.tone-violet { color: #785ba0; background: #f1ebf8; }.tone-green { color: #3f8056; background: #eaf4ec; }.tone-red { color: #a8514d; background: #faecea; }.tone-slate { color: #65717d; background: #edf0f2; }
+.diagram-reactflow { position: relative; min-height: 0; flex: 1; background: #f8faf8; }
+.diagram-reactflow .react-flow { width: 100%; height: 100%; }
+.diagram-reactflow .react-flow__controls { overflow: hidden; border: 1px solid #e1e7e2; border-radius: 7px; box-shadow: 0 2px 9px #243b2d12; }
+.diagram-reactflow .react-flow__controls-button { width: 27px; height: 27px; border-bottom-color: #e9eeea; background: #fff; fill: #65756a; }
+.diagram-reactflow .react-flow__minimap { border: 1px solid #e1e7e2; border-radius: 6px; background: rgba(255,255,255,.92); }
+.diagram-reactflow .react-flow__edge-textbg { fill: #fff; }
+.architecture-node { position: relative; display: flex; width: 190px; min-height: 65px; align-items: center; gap: 10px; padding: 9px 12px; border: 1px solid #d9e3dc; border-left: 3px solid #6a9c7a; border-radius: 4px; color: #344239; background: #fff; box-shadow: 0 2px 7px #22372b0d; }
+.architecture-node.is-text-node { border: 1px dashed #84968a; border-radius: 5px; background: #fff; box-shadow: 0 2px 6px #22372b08; }
+.architecture-node.is-text-node .architecture-node-copy { width: 100%; }
+.architecture-node.is-text-node .architecture-node-copy strong { font-weight: 520; }
+.architecture-node.is-custom-node { border-left-width: 1px; }
+.architecture-node.is-custom-node .architecture-node-icon { color: #626f78; background: #eef1f3; }
+.architecture-node.selected { border-color: #57916d; box-shadow: 0 0 0 2px #57916d25,0 4px 12px #22372b12; }
+.architecture-node-icon { display: grid; width: 34px; height: 34px; flex: 0 0 34px; place-items: center; border-radius: 8px; color: #3f8056; background: #eaf4ec; }
+.architecture-node-copy { display: grid; min-width: 0; gap: 4px; }.architecture-node-copy strong { overflow: hidden; color: #344239; font-size: 10px; font-weight: 660; text-overflow: ellipsis; white-space: nowrap; }.architecture-node-copy small { color: #919c94; font-size: 8px; }
+.architecture-node.tone-teal { border-left-color: #45a092; }.architecture-node.tone-teal .architecture-node-icon { color: #287c73; background: #e5f4f1; }.architecture-node.tone-blue { border-left-color: #5c8eb5; }.architecture-node.tone-blue .architecture-node-icon { color: #386e9b; background: #e8f1f8; }.architecture-node.tone-amber { border-left-color: #d09a42; }.architecture-node.tone-amber .architecture-node-icon { color: #a7782c; background: #faf2df; }.architecture-node.tone-violet { border-left-color: #997ab6; }.architecture-node.tone-violet .architecture-node-icon { color: #785ba0; background: #f1ebf8; }.architecture-node.tone-red { border-left-color: #c76f65; }.architecture-node.tone-red .architecture-node-icon { color: #a8514d; background: #faecea; }
+.architecture-node.shape-round { border-radius: 22px; }
+.architecture-node.shape-circle { display: flex; width: 126px; min-width: 126px; height: 126px; min-height: 126px; align-items: center; justify-content: center; flex-direction: column; gap: 5px; padding: 12px; border: 1px solid #d9e3dc; border-left-width: 1px; border-radius: 50%; text-align: center; }
+.architecture-node.shape-circle .architecture-node-icon { width: 29px; height: 29px; flex-basis: 29px; border-radius: 50%; }
+.architecture-node.shape-circle .architecture-node-copy { width: 100%; justify-items: center; }
+.architecture-node.shape-circle .architecture-node-copy strong { max-width: 94px; }
+.architecture-node.shape-circle .architecture-node-copy small { max-width: 96px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.architecture-node.shape-diamond { display: flex; width: 168px; min-width: 168px; height: 112px; min-height: 112px; align-items: center; justify-content: center; gap: 8px; padding: 12px 23px; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.architecture-node.shape-diamond::before { position: absolute; z-index: 0; top: 18px; left: calc(50% - 38px); width: 76px; height: 76px; border: 1.5px solid #94a69a; border-radius: 5px; background: #fff; box-shadow: 0 2px 7px #22372b0d; content: ""; transform: rotate(45deg); }
+.architecture-node.shape-diamond.selected::before { border-color: #39775a; box-shadow: 0 0 0 2px #57916d25,0 4px 12px #22372b12; }
+.architecture-node.shape-diamond .architecture-node-icon,.architecture-node.shape-diamond .architecture-node-copy { position: relative; z-index: 1; }
+.architecture-node.shape-diamond .architecture-node-icon { width: 28px; height: 28px; flex-basis: 28px; border-radius: 50%; }
+.architecture-node.shape-diamond .architecture-node-copy { max-width: 78px; }
+.architecture-node.shape-diamond .architecture-node-copy strong { white-space: normal; text-align: center; }
+.architecture-node.shape-database { width: 174px; min-width: 174px; min-height: 78px; border: 1px solid #d9e3dc; border-left-width: 1px; border-radius: 50% / 18%; }
+.architecture-node.shape-database::before { position: absolute; top: 0; right: 0; left: 0; height: 15px; border: 1px solid #d9e3dc; border-radius: 50%; background: #f8fbf8; content: ""; }
+.architecture-node.shape-database.selected::before { border-color: #57916d; }
+.architecture-node.shape-database .architecture-node-copy,.architecture-node.shape-database .architecture-node-icon { position: relative; z-index: 1; }
+.diagram-text-annotation { position: relative; width: 270px; min-height: 24px; padding: 0 0 0 10px; border-left: 2px solid #d9e2dc; background: transparent; }
+.diagram-text-drag { position: absolute; top: 2px; left: -20px; display: grid; width: 14px; height: 18px; place-items: center; color: #a8b5ac; cursor: grab; opacity: 0; }
+.diagram-text-annotation:hover .diagram-text-drag,.diagram-text-annotation.selected .diagram-text-drag { opacity: 1; }
+.diagram-text-display { min-height: 24px; color: #4d5b52; font-size: 12px; font-style: italic; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; cursor: text; }
+.diagram-text-annotation textarea { display: block; width: 100%; min-width: 100px; min-height: 24px; overflow: hidden; resize: horizontal; padding: 2px 4px; border: 1px dotted #bac8be; border-radius: 3px; outline: 0; color: #4d5b52; background: rgba(255,255,255,.84); box-shadow: none; font-family: inherit; font-size: 12px; line-height: 1.5; white-space: pre-wrap; }
+.diagram-text-annotation textarea:focus { border-color: #8ea696; background: #fff; }
+.diagram-text-annotation textarea::placeholder { color: #a1ada4; font-style: italic; }
+.architecture-node.shape-cloud { width: 200px; min-width: 200px; min-height: 76px; border: 1px solid #d9e3dc; border-left-width: 1px; border-radius: 38% 38% 28% 28% / 52% 52% 27% 27%; }
+.architecture-node.shape-queue { border-left-style: double; border-left-width: 6px; border-right: 3px solid #94a69a; border-radius: 7px; box-shadow: inset -5px 0 0 #f2f6f2,0 2px 7px #22372b0d; }
+.architecture-node .react-flow__handle { width: 9px; height: 9px; border: 1px solid #fff; background: #55846a; }
+.architecture-group { width: 100%; height: 100%; padding: 10px 12px; border: 1px solid #aec8b5; border-radius: 9px; background: rgba(235,244,237,.55); pointer-events: none; }.architecture-group strong { display: block; color: #477055; font-size: 10px; font-weight: 680; }.architecture-group span { display: inline-block; margin-top: 3px; color: #82988a; font-size: 8px; }
+.diagram-drop-hint { display: inline-flex; align-items: center; gap: 7px; margin-top: 23px; padding: 8px 11px; border: 1px solid #e1e9e3; border-radius: 7px; color: #849188; background: rgba(255,255,255,.94); box-shadow: 0 3px 12px #273a2c0a; font-size: 9px; }
+.diagram-expand-action { display: grid; width: 27px; height: 27px; place-items: center; border: 1px solid #e5eae6; border-radius: 5px; color: #75847a; background: #fff; cursor: pointer; }.diagram-expand-action:hover { color: #31664a; background: #f1f7f2; }
+.diagram-code-heading > div { display: flex; align-items: center; gap: 7px; }
+.diagram-export-actions { display: flex; flex-wrap: wrap; gap: 5px; padding-top: 8px; }.diagram-export-actions button { display: inline-flex; min-height: 27px; align-items: center; gap: 5px; padding: 0 8px; border: 1px solid #e3e9e4; border-radius: 5px; color: #64736a; background: #fff; font-size: 8px; cursor: pointer; }.diagram-export-actions button:hover:not(:disabled) { color: #35694b; background: #f2f7f3; }.diagram-export-actions button:disabled { opacity: .45; }
+.diagram-mobile-source-tabs { display: none; }
+.diagram-focus-scrim { position: absolute; z-index: 120; inset: 0; display: grid; place-items: center; padding: 28px; background: rgba(29,43,34,.32); backdrop-filter: blur(5px); animation: fadein .14s ease-out; }
+.diagram-focus-view { position: relative; display: flex; width: min(1080px,100%); height: min(760px,calc(100% - 8px)); min-height: 0; flex-direction: column; overflow: hidden; border: 1px solid #dfe7e1; border-radius: 10px; background: #f7f9f7; box-shadow: 0 22px 75px rgba(25,42,31,.23); animation: modalin .18s var(--ease); }
+.diagram-focus-view > header,.diagram-focus-view > footer { display: flex; min-height: 55px; align-items: center; justify-content: space-between; gap: 10px; padding: 0 16px; border-bottom: 1px solid #e2e8e3; background: #fff; }.diagram-focus-view > header > div:first-child { display: grid; min-width: 0; gap: 4px; }.diagram-focus-view > header strong { color: #3d4b42; font-size: 11px; }.diagram-focus-view > header span { color: #929c95; font-size: 9px; }.diagram-focus-view > textarea { width: 100%; min-height: 0; flex: 1; resize: none; padding: 18px; border: 0; outline: 0; color: #46544b; background: #fbfcfb; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: 13px; line-height: 1.75; tab-size: 2; }.diagram-focus-view > footer { justify-content: flex-end; border-top: 1px solid #e2e8e3; border-bottom: 0; }.diagram-focus-preview { display: grid; min-height: 0; flex: 1; overflow: auto; place-items: center; padding: 20px; }.diagram-focus-preview .diagram-rendered { width: min(1000px,100%); }.diagram-focus-preview svg { display: block; width: 100%; height: auto; max-height: calc(100% - 16px); }
+
+@media (max-width: 850px) {
+  .diagram-modal { min-width: 0; width: 100%; }
+  .diagram-workspace { display: flex !important; min-width: 0; min-height: 0; flex-direction: column; grid-template-columns: none !important; grid-template-rows: none !important; }
+  .diagram-component-library { width: 100%; height: 70px; min-height: 70px; max-height: 70px; flex: 0 0 70px; overflow: hidden; border-right: 0; border-bottom: 1px solid #e0e6e1; }
+  .diagram-library-heading { display: none; }
+  .diagram-library-scroll { display: flex; height: auto; min-height: 0; flex: 1 1 auto; align-items: flex-start; align-content: flex-start; overflow-x: auto; overflow-y: hidden; padding: 0 8px 4px; scrollbar-width: none; scroll-snap-type: x proximity; }
+  .diagram-library-scroll::-webkit-scrollbar { display: none; }
+  .diagram-library-scroll section { display: flex; height: auto; flex: 0 0 auto; align-items: flex-start; margin: 0 8px 0 0; scroll-snap-align: start; }
+  .diagram-library-scroll h3 { display: none; }
+  .diagram-library-scroll section > div { display: flex; height: auto; align-items: flex-start; gap: 3px; }
+  .diagram-library-scroll button { display: flex; width: 76px; min-width: 76px; height: 64px; min-height: 64px; flex-direction: column; align-items: center; justify-content: flex-start; gap: 2px; overflow: visible; padding: 2px 4px; color: #536057; font-size: 7px; line-height: 1.15; text-align: center; white-space: normal; }
+  .diagram-library-scroll button > span:last-child { display: block; max-width: 68px; overflow: visible; color: #536057; }
+  .diagram-library-icon { width: 24px; height: 24px; flex-basis: 24px; }
+  .diagram-canvas-column { width: 100%; min-width: 0; min-height: 0; flex: 1 1 auto; }
+  .diagram-canvas-toolbar { min-width: 0; gap: 5px; padding-right: 7px; padding-left: 8px; }
+  .diagram-canvas-status { flex: 0 0 auto; }
+  .diagram-canvas-actions { min-width: 0; flex: 1 1 auto; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; }
+  .diagram-canvas-actions::-webkit-scrollbar,.diagram-library-scroll::-webkit-scrollbar { display: none; }
+  .diagram-footer { min-height: calc(58px + env(safe-area-inset-bottom)); padding-right: max(12px,env(safe-area-inset-right)); padding-bottom: env(safe-area-inset-bottom); padding-left: max(12px,env(safe-area-inset-left)); }
+}
+
+.diagram-view-action { display: inline-flex !important; width: auto !important; min-width: 28px; flex-basis: auto !important; align-items: center; justify-content: center; gap: 5px; padding: 0 7px; border: 1px solid #e3e9e4 !important; color: #5b7062 !important; background: #fff !important; font-size: 9px; }
+.diagram-view-action:hover { color: #2f6848 !important; background: #eff6f0 !important; }
+.diagram-side-tabs > strong { color: #58665d; font-size: 9px; font-weight: 650; }
+.diagram-focus-actions { display: flex; align-items: center; gap: 5px; margin-left: auto; }
+.diagram-export-button { display: inline-flex; min-height: 29px; align-items: center; gap: 5px; padding: 0 8px; border: 1px solid #e2e8e3; border-radius: 5px; color: #627168; background: #fff; font-size: 9px; cursor: pointer; }
+.diagram-export-button:hover:not(:disabled) { color: #326849; background: #f0f6f1; }.diagram-export-button:disabled { opacity: .45; }
+.diagram-focus-status { display: flex; min-height: 32px; align-items: center; gap: 6px; padding: 0 16px; border-bottom: 1px solid #e8ede9; color: #60806a; background: #f5f9f5; font-size: 9px; }
+.diagram-focus-view > textarea { min-height: 0; flex: 1; }
+
+@media (max-width: 650px) {
+  .diagram-view-action { width: 30px !important; padding: 0; font-size: 0; }
+  .diagram-view-action svg { flex: 0 0 auto; }
+  .diagram-focus-actions { gap: 3px; }
+  .diagram-export-button { width: 30px; justify-content: center; padding: 0; font-size: 0; }
+  .diagram-export-button svg { flex: 0 0 auto; }
+  .diagram-focus-view > header { gap: 5px; padding: 0 8px; }
+  .diagram-focus-view > header > div:first-child { min-width: 0; }
+  .diagram-focus-view > header span { max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .diagram-focus-scrim { padding: 10px; }
+  .diagram-focus-view { width: 100%; height: calc(100% - 4px); border-radius: 8px; }
+}
+
+@media (max-width: 520px) {
+  .diagram-template-select > span { display: none; }
+  .diagram-template-select select { max-width: 83px; min-height: 26px; font-size: 8px; }
+  .diagram-new-button { width: 28px; min-height: 27px; justify-content: center; padding: 0; font-size: 0; }
+  .diagram-new-button svg { flex: 0 0 auto; }
+  .diagram-canvas-toolbar { overflow: hidden; }
+  .diagram-canvas-status > span { display: none; }
+  .diagram-canvas-actions { min-width: 0; }
+  .diagram-connection-label { max-width: 78px; font-size: 8px; }
+  .diagram-focus-view { padding-bottom: env(safe-area-inset-bottom); }
+  .diagram-focus-view > textarea { padding: 12px; font-size: 12px; }
+  .diagram-focus-preview { padding: 10px; }
+  .diagram-focus-preview svg { max-height: calc(100vh - 135px); }
+}
+
+.diagram-workspace:has(.diagram-component-library.is-collapsed) { grid-template-columns: 72px minmax(0,1fr) !important; }
+.diagram-canvas-status { display: flex; min-width: 0; align-items: center; gap: 8px; }
+.diagram-library-collapse { display: grid; width: 28px; height: 28px; flex: 0 0 28px; place-items: center; border: 1px solid #e1e8e2; border-radius: 6px; color: #65766a; background: #fff; cursor: pointer; transition: color .15s,background .15s,border-color .15s; }
+.diagram-library-collapse:hover,.diagram-library-collapse:focus-visible { border-color: #c8d9cc; color: #31664a; background: #edf5ef; }
+.diagram-library-collapse:focus-visible { outline: 2px solid #7ca98a; outline-offset: 2px; }
+.diagram-component-library.is-collapsed .diagram-library-heading { min-height: 42px; justify-content: center; padding: 5px 4px; border-bottom: 0; }
+.diagram-component-library.is-collapsed .diagram-library-heading strong,.diagram-component-library.is-collapsed .diagram-library-heading span { display: none; }
+.diagram-component-library.is-collapsed .diagram-library-scroll { padding: 4px; }
+.diagram-component-library.is-collapsed .diagram-library-scroll section { margin: 4px 0 8px; }
+.diagram-component-library.is-collapsed .diagram-library-scroll h3,.diagram-component-library.is-collapsed .diagram-library-scroll button > span:not(.diagram-library-icon) { display: none; }
+.diagram-component-library.is-collapsed .diagram-library-scroll section > div { justify-items: center; }
+.diagram-component-library.is-collapsed .diagram-library-scroll button { width: 38px; min-height: 38px; justify-content: center; padding: 2px; }
+.diagram-component-library.is-collapsed .diagram-library-icon { width: 29px; height: 29px; flex-basis: 29px; }
+.diagram-inspector-scrim { position: fixed; z-index: 150; inset: 0; background: transparent; }
+.diagram-inspector-popover { position: fixed; display: flex; width: min(292px,calc(100vw - 24px)); max-height: min(430px,calc(100vh - 110px)); flex-direction: column; overflow: hidden; border: 1px solid #dce6de; border-radius: 8px; background: #fff; box-shadow: 0 12px 34px rgba(25,43,31,.2),0 2px 7px rgba(25,43,31,.08); animation: appear .12s var(--ease); }
+.diagram-inspector-popover > header { display: flex; min-height: 39px; align-items: center; justify-content: space-between; gap: 8px; padding: 0 10px 0 12px; border-bottom: 1px solid #edf0ed; color: #46544b; background: #fbfcfb; }
+.diagram-inspector-popover > header strong { overflow: hidden; font-size: 10px; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
+.diagram-inspector-close { display: grid; width: 25px; height: 25px; flex: 0 0 25px; place-items: center; border: 0; border-radius: 5px; color: #89958d; background: transparent; cursor: pointer; }.diagram-inspector-close:hover { color: #35694b; background: #edf5ef; }
+.diagram-inspector-popover .diagram-inspector { min-height: 0; overflow-y: auto; gap: 10px; padding: 12px; }
+.diagram-inspector-popover .diagram-inspector label { gap: 4px; font-size: 9px; }
+.diagram-inspector-popover .diagram-inspector input,.diagram-inspector-popover .diagram-inspector select { min-height: 30px; }
+.diagram-reactflow .react-flow__handle { width: 10px; height: 10px; border: 2px solid #fff; background: #538768; box-shadow: 0 0 0 1px #53876855; }
+.diagram-reactflow .react-flow__handle:hover { width: 13px; height: 13px; background: #286643; }
+.diagram-flow-edge-label { display: inline-block; padding: 2px 6px; border: 1px solid #e2e8e3; border-radius: 4px; color: #536057; background: #fff; font-size: 9px; line-height: 1.4; white-space: nowrap; }
+.diagram-edge-route-grip { display: block; width: 12px; height: 12px; margin: 3px auto 0; padding: 0; border: 2px solid #fff; border-radius: 50%; background: #8ba995; box-shadow: 0 0 0 1px #73947f; cursor: move; opacity: 0; touch-action: none; }
+.react-flow__edge:hover .diagram-edge-route-grip,.diagram-edge-route-grip:focus-visible,.diagram-edge-route-grip.selected { opacity: 1; }
+.diagram-edge-route-grip:hover { background: #326849; transform: scale(1.15); }
+
+@media (max-width: 850px) {
+  .diagram-component-library.is-collapsed { min-height: 84px; flex-basis: 84px; }
+  .diagram-library-heading { display: flex; min-height: 32px; align-items: center; gap: 7px; padding: 2px 8px; border: 0; }
+  .diagram-library-heading strong { font-size: 8px; }
+  .diagram-library-heading span { display: none; }
+  .diagram-canvas-status { gap: 5px; }
+  .diagram-component-library.is-collapsed .diagram-library-heading { justify-content: flex-end; padding: 2px 8px; }
+  .diagram-component-library.is-collapsed .diagram-library-heading strong { display: block; }
+  .diagram-component-library.is-collapsed .diagram-library-scroll { padding: 0 8px; }
+  .diagram-component-library.is-collapsed .diagram-library-scroll section { flex: 0 0 auto; margin: 0 6px 0 0; }
+  .diagram-component-library.is-collapsed .diagram-library-scroll section > div { display: flex; gap: 4px; }
+  .diagram-component-library.is-collapsed .diagram-library-scroll button { width: 48px; min-width: 48px; min-height: 48px; }
+  .diagram-inspector-popover { width: min(320px,calc(100vw - 20px)); max-height: calc(100dvh - 100px); }
+  .diagram-inspector-scrim { z-index: 150; }
+}
+
+@media (max-width: 400px) {
+  .diagram-component-library.is-collapsed { min-height: 84px; flex-basis: 84px; }
+  .diagram-canvas-actions { gap: 8px; }
+  .diagram-view-action + .diagram-view-action { margin-left: 6px; }
+  .diagram-view-action + .diagram-view-action { margin-left: 8px; }
+  .diagram-canvas-actions button { width: 25px; flex-basis: 25px; }
+  .diagram-canvas-actions > span { margin-right: 3px; margin-left: 3px; }
+  .diagram-footer { min-height: calc(58px + env(safe-area-inset-bottom)); gap: 4px; }
+  .diagram-footer > span { display: none; }
+  .diagram-footer > div { gap: 5px; }
+  .diagram-cancel,.diagram-insert { min-height: 36px; padding: 0 9px; font-size: 9px; }
+}
+
+@media (max-width: 850px) {
+  .diagram-workspace { display: flex !important; height: auto !important; grid-template: none !important; }
+  .diagram-library-heading { display: none !important; }
+  .diagram-component-library { position: relative; box-sizing: border-box; height: 50px !important; min-height: 50px !important; max-height: 50px !important; flex: 0 0 50px !important; }
+  .diagram-library-scroll { position: absolute; inset: 0; display: flex; box-sizing: border-box; height: auto !important; min-height: 0 !important; margin: 0 !important; padding: 4px 8px 0 !important; align-items: flex-start !important; }
+  .diagram-library-scroll section { height: auto !important; margin: 0 8px 0 0 !important; }
+  .diagram-library-scroll section > div { height: auto !important; }
+  .diagram-library-scroll button { width: 62px !important; min-width: 62px !important; height: 44px !important; min-height: 44px !important; align-self: flex-start; margin: 0 !important; padding: 0 2px !important; }
+  .diagram-library-scroll .diagram-library-icon { width: 21px; height: 21px; flex-basis: 21px; }
+  .diagram-canvas-column { min-height: 0; flex: 1 1 auto; }
+  .diagram-canvas-actions { gap: 9px !important; }
+  .diagram-view-action + .diagram-view-action { margin-left: 7px; }
+}

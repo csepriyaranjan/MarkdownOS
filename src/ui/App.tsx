@@ -1,5 +1,5 @@
 import {
-  ArrowDownToLine, Check, CircleHelp, Download, FileText, Folder, FolderOpen, House, LayoutDashboard, Menu,
+  ArrowDownToLine, Check, CircleHelp, Download, FileText, Folder, FolderOpen, Menu,
   Pencil, Settings2, ShieldCheck, Sparkles, Trash2, X,
 } from "lucide-react";
 import DOMPurify from "dompurify";
@@ -499,35 +499,26 @@ function App() {
               setMobilePane((pane) => pane === "folders" ? "files" : "folders");
             }}
           >{mobilePane === "folders" ? <X size={19} /> : <Menu size={19} />}</button>
-          <div className="brand-icon"><Sparkles size={17} strokeWidth={2.3} /></div>
-          <div className="brand-copy"><strong>MarkdownOS</strong><span>{tree ? adapter.rootName : "Your private writing space"}</span></div>
+          <button className="brand-home-link" onClick={() => navigateToPage(true)} disabled={!tree} aria-label="Open MarkdownOS workspace">
+            <span className="brand-icon"><Sparkles size={17} strokeWidth={2.3} /></span>
+            <span className="brand-copy"><strong>MarkdownOS</strong><span>{tree ? adapter.rootName : "Your private writing space"}</span></span>
+          </button>
         </div>
         <div className="topbar-center">
           {welcome
             ? <nav className="landing-nav" aria-label="Main navigation">
                 <a href="#features">Features</a><a href="#privacy">Privacy</a><a href="#how-it-works">How it works</a><a href="#about">About</a>
               </nav>
-            : tree && <><span className="privacy-pill"><span className="live-dot" /> ALL FILES STAY ON THIS DEVICE</span><span className="sync-pill"><ShieldCheck size={13} /> Offline ready</span></>}
+            : tree && <span className="privacy-pill"><span className="live-dot" /> ALL FILES STAY ON THIS DEVICE</span>}
         </div>
         <div className="topbar-actions">
-          {!welcome && <button
-            className="dashboard-nav-button"
-            onClick={() => {
-              if (dashboardOpen && tree) navigateToPage(false);
-              else if (rootAccessNeeded) void reconnectFolder();
-              else if (tree) navigateToPage(true);
-              else if (isSupported) void chooseFolder();
-            }}
-            disabled={!tree && !rootAccessNeeded && !isSupported}
-          >{dashboardOpen && tree ? <><House size={15} /> Home</> : <><LayoutDashboard size={15} /> Dashboard</>}</button>}
           {welcome && <a className="landing-github" href="https://github.com/csepriyaranjan/MarkdownOS" target="_blank" rel="noreferrer">GitHub</a>}
           {welcome && <details className="landing-mobile-nav"><summary aria-label="Open navigation"><Menu size={19} /></summary><nav aria-label="Mobile navigation"><a href="#features">Features</a><a href="#privacy">Privacy</a><a href="#how-it-works">How it works</a><a href="#about">About</a></nav></details>}
           {tree && <button className="header-action" onClick={() => setSettingsOpen((open) => !open)} aria-label="Settings"><Settings2 size={17} /></button>}
-          {welcome && (installPrompt
+          {!installed && welcome && (installPrompt
             ? <button className="landing-install" onClick={() => void installApp()}><ArrowDownToLine size={15} /> Install</button>
             : <a className="landing-install" href="#get-started">Install</a>)}
-          {!welcome && installPrompt && <button className="install-button" onClick={() => void installApp()}><ArrowDownToLine size={15} /> Install app</button>}
-          {!welcome && <button className="avatar-button" aria-label="Local workspace"><span>Y</span></button>}
+          {!installed && !welcome && installPrompt && <button className="install-button" onClick={() => void installApp()}><ArrowDownToLine size={15} /> Install app</button>}
         </div>
       </header>
 

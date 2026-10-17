@@ -8,13 +8,21 @@ export function escapeHtml(value: string): string {
   })[character] ?? character);
 }
 
-export function MarkdownPreview({ content }: { content: string }) {
+export function MarkdownPreview({ content, onEditDiagram }: { content: string; onEditDiagram?: (source: string, metadata?: string) => void }) {
   const ref = useRef<HTMLDivElement>(null);
+  const onEditDiagramRef = useRef(onEditDiagram);
+  onEditDiagramRef.current = onEditDiagram;
   const html = useMemo(() => {
     const renderer = new Renderer();
+    const metadata = [...content.matchAll(/(?:^<!--\s*markdownos:diagram-meta\s+([^\r\n]*?)\s*-->\s*\r?\n)?^```mermaid[^\S\n]*\r?\n[\s\S]*?^```[ \t]*$/gim)]
+      .map((match) => {
+        try { return match[1] ? decodeURIComponent(match[1]) : ""; }
+        catch { return ""; }
+      });
+    let diagramIndex = 0;
     renderer.code = ({ text, lang }) => {
       if (lang?.trim().toLowerCase() === "mermaid") {
-        return `<div class="mermaid-source">${escapeHtml(text)}</div>`;
+        return `<div class="mermaid-source" data-diagram-metadata="${escapeHtml(metadata[diagramIndex++] ?? "")}">${escapeHtml(text)}</div>`;
       }
       const language = lang ? ` class="language-${escapeHtml(lang)}"` : "";
       return `<pre><code${language}>${escapeHtml(text)}</code></pre>`;
@@ -47,6 +55,15 @@ export function MarkdownPreview({ content }: { content: string }) {
           if (cancelled) return;
           element.className = "mermaid-card";
           element.innerHTML = DOMPurify.sanitize(result.svg, { USE_PROFILES: { svg: true, svgFilters: true } });
+          if (onEditDiagramRef.current) {
+            const button = document.createElement("button");
+            button.className = "mermaid-edit-button";
+            button.type = "button";
+            button.textContent = "Edit diagram";
+            button.dataset.mermaidSource = source;
+            button.dataset.mermaidMetadata = element.dataset.diagramMetadata ?? "";
+            element.append(button);
+          }
         } catch (error) {
           if (cancelled) return;
           renderDiagramError(element, source, error);
@@ -58,7 +75,10 @@ export function MarkdownPreview({ content }: { content: string }) {
     return () => { cancelled = true; };
   }, [html]);
 
-  return <div ref={ref} className="markdown-preview" dangerouslySetInnerHTML={{ __html: html }} />;
+  return <div ref={ref} className="markdown-preview" onClick={(event) => {
+    const target = event.target instanceof Element ? event.target.closest<HTMLButtonElement>(".mermaid-edit-button") : null;
+    if (target?.dataset.mermaidSource) onEditDiagramRef.current?.(target.dataset.mermaidSource, target.dataset.mermaidMetadata);
+  }} dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
 function renderDiagramError(element: HTMLElement, source: string, error: unknown): void {
